@@ -21,7 +21,6 @@ return {
       "goimports-reviser",
       "golangci-lint",
       "gopls",
-      "grammarly-languageserver",
       "graphql-language-service-cli",
       "hadolint",
       "html-lsp",
