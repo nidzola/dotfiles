@@ -1,0 +1,5 @@
+# This shuld be palced in the home directory
+
+!.env
+!.env.*
+!.env.*.local
