@@ -105,16 +105,6 @@ return {
             cmp.config.compare.length,
             cmp.config.compare.order,
           },
-
-          -- deprioritize_snippet,
-          -- function(entry1, entry2)
-          --   if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
-          --     return false
-          --   end
-          --   if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
-          --     return true
-          --   end
-          -- end,
         },
         snippet = {
           expand = function(args)
