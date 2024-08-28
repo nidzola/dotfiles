@@ -10,15 +10,14 @@
 !scripts/
 !scripts/**
 
-!.config/
-!.config/wezterm/
-!.config/wezterm/**/*
-!.config/nvim/
-!.config/nvim/**/*
-!.config/alacritty/
-!.config/alacritty/**/*
-!.config/kitty/
-!.config/kitty/**/*
-!.config/yazi/
-!.config/yazi/**/*
+!wezterm/
+!wezterm/**/*
+!nvim/
+!nvim/**/*
+!alacritty/
+!alacritty/**/*
+!kitty/
+!kitty/**/*
+!yazi/
+!yazi/**/*
 /**/.DS_Store
