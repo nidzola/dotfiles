@@ -38,13 +38,17 @@ local diagnostic_goto = function(next, severity)
 end
 map("n", "ge", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
 
--- Plugin deps keymaps:
-
 -- Show dependency versions
-map("n", "<leader>ps", require("package-info").show, { silent = true, noremap = true })
+map(
+  "n",
+  "<leader>ps",
+  require("package-info").show,
+  { silent = true, noremap = true, desc = "Show dependency versions" }
+)
 -- Hide dependency versions:
-map("n", "<leader>ph", require("package-info").hide, { silent = true, noremap = true })
-
-map("n", "<leader>gb", "<Cmd>Gitsigns blame<CR>", { noremap = true, silent = true, desc = "Git blame" })
-
-map("n", "<leader>hr", ":lua require('kulala').run()<CR>", { noremap = true, silent = true, desc = "Run HTTP request" })
+map(
+  "n",
+  "<leader>ph",
+  require("package-info").hide,
+  { silent = true, noremap = true, desc = "Hide dependency versions" }
+)
