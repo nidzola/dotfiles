@@ -36,7 +36,7 @@ local diagnostic_goto = function(next, severity)
     go({ severity = severity })
   end
 end
-map("n", "ge", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
+map("n", "ge", diagnostic_goto(true), { desc = "Next Diagnostic" })
 
 -- Show dependency versions
 map(
