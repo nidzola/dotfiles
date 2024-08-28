@@ -9,6 +9,7 @@ return {
         "diff",
         "dockerfile",
         "dot",
+        "git_config",
         "gitignore",
         "go",
         "gomod",
