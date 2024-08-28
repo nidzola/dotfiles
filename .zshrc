@@ -1,43 +1,37 @@
-# Enable Powerlevel10k instant prompt.
+# Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Oh-my-zsh configuration
 export ZSH="$HOME/.oh-my-zsh"
-
 ZSH_THEME="powerlevel10k/powerlevel10k"
+source $ZSH/oh-my-zsh.sh
 
-# use case-sensitive completion.
+# Zsh options
 CASE_SENSITIVE="true"
-
-# change how often to auto-update (in days).
-zstyle ':omz:update' frequency 5
-
-ZVM_INIT_MODE=sourcing
-
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 
-source $ZSH/oh-my-zsh.sh
-
+# Language and editor settings
 export LANG=en_US.UTF-8
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export EDITOR=nvim
 
-
+# Key bindings
 bindkey "\e\eOD" backward-word
 bindkey "\e\eOC" forward-word
 
+# Homebrew configuration
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# PostgreSQL configuration
 export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/postgresql@13/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/postgresql@13/include"
-export EDITOR=nvim
 
+# Aliases
 alias y='yazi'
 alias gs='git status'
 alias gdb='git branch -D $1'
@@ -52,27 +46,32 @@ alias ls="eza"
 alias cat="bat"
 alias z="zi"
 
+# Go configuration
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOPRIVATE=github.com/transcarent
 export GOROOT=/opt/homebrew/Cellar/go/1.22.6/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
-export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
+
+# Path configuration
 export PATH="/Users/nikola/.local/bin:$PATH"
 export PATH=$PATH:/Users/nikola/projects/bin
 
+# Terraform configuration
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.1.7/terraform terraform
+
+# Google Cloud configuration
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/nikola/.gcp/dev-gcp.json
+
+# Zsh plugins
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 eval "$(zoxide init zsh)"
 
-# vi-mode
+# Vi-mode
 bindkey -v
 KEYTIMEOUT=1
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# Powerlevel10k configuration
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
