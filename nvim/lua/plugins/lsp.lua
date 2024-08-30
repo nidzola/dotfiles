@@ -1,6 +1,7 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
+    inlay_hints = { enabled = false },
     setup = {
       tsserver = function(_, opts)
         opts.init_options = {
@@ -15,10 +16,20 @@ return {
             hints = opts.settings.gopls.hints,
             analyses = {
               unusedparams = true,
+              fieldalignment = true,
+              nilness = true,
+              shadow = true,
+              unusedwrite = true,
             },
-          },
-          completion = {
-            insertPlaceholders = false,
+            codelenses = {
+              gc_details = true,
+              regenerate_cgo = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
+            },
+            deepCompletion = true,
+            staticcheck = true,
           },
         }
         -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
