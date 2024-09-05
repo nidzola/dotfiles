@@ -30,7 +30,47 @@ config.keys = {
 	{ key = "v", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
 	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
-	{ key = "o", mods = "ALT", action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	-- { key = "o", mods = "ALT", action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	{
+		key = "o",
+		mods = "ALT",
+		action = wezterm.action_callback(function(window, pane)
+			-- TODO: confiure this list dynamically
+			local home = wezterm.home_dir
+			local workspaces = {
+				{ id = home .. "/.config", label = "config" },
+				{ id = home .. "/projects/go-api", label = "go-api" },
+				{ id = home .. "/projects/service-partner", label = "service-partner" },
+				{ id = home .. "/projects/service-partner-frontend", label = "service-partner-frontend" },
+			}
+			window:perform_action(
+				wezterm.action.InputSelector({
+					action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+						if not id and not label then
+							wezterm.log_info("cancelled")
+						else
+							wezterm.log_info("id = " .. id)
+							wezterm.log_info("label = " .. label)
+							inner_window:perform_action(
+								wezterm.action.SwitchToWorkspace({
+									name = label,
+									spawn = {
+										label = "Workspace: " .. label,
+										cwd = id,
+									},
+								}),
+								inner_pane
+							)
+						end
+					end),
+					title = "Choose Workspace",
+					choices = workspaces,
+					fuzzy = true,
+				}),
+				pane
+			)
+		end),
+	},
 	{ key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
 	{ key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
 	{ key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },

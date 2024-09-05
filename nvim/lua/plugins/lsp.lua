@@ -3,7 +3,7 @@ return {
   opts = {
     inlay_hints = { enabled = false },
     setup = {
-      tsserver = function(_, opts)
+      ts_ls = function(_, opts)
         opts.init_options = {
           preferences = {
             importModuleSpecifierPreference = "non-relative",
