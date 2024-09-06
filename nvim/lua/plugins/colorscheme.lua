@@ -16,4 +16,13 @@ return {
       colorscheme = "everforest",
     },
   },
+  -- disabling other default lazyvim themes
+  {
+    "catppuccin/nvim",
+    enabled = false,
+  },
+  {
+    "folke/tokyonight.nvim",
+    enabled = false,
+  },
 }

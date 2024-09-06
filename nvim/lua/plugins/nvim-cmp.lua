@@ -41,36 +41,15 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      {
-        "L3MON4D3/LuaSnip",
-        config = function()
-          local luasnip = require("luasnip")
-
-          require("luasnip.loaders.from_vscode").lazy_load()
-
-          -- HACK: Cancel the snippet session when leaving insert mode.
-          vim.api.nvim_create_autocmd("ModeChanged", {
-            group = vim.api.nvim_create_augroup("UnlinkSnippetOnModeChange", { clear = true }),
-            pattern = { "s:n", "i:*" },
-            callback = function(event)
-              if luasnip.session and luasnip.session.current_nodes[event.buf] and not luasnip.session.jump_active then
-                luasnip.unlink_current()
-              end
-            end,
-          })
-        end,
-      },
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
-      "saadparwaiz1/cmp_luasnip",
       "lukas-reineke/cmp-under-comparator",
     },
     version = false,
     event = "InsertEnter",
     config = function()
       local cmp = require("cmp")
-      local luasnip = require("luasnip")
       local types = require("cmp.types")
 
       -- Inside a snippet, use backspace to remove the placeholder.
@@ -106,11 +85,6 @@ return {
             cmp.config.compare.order,
           },
         },
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
         window = {
           -- Make the completion menu bordered.
           completion = cmp.config.window.bordered(),
@@ -138,8 +112,6 @@ return {
               copilot.accept()
             elseif cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
             else
               fallback()
             end
@@ -147,8 +119,6 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.expand_or_locally_jumpable(-1) then
-              luasnip.jump(-1)
             else
               fallback()
             end
@@ -163,7 +133,6 @@ return {
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
-          { name = "luasnip" },
           { name = "crates" },
           { name = "buffer" },
           { name = "path" },
