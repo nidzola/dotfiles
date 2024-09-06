@@ -15,7 +15,19 @@ config.show_new_tab_button_in_tab_bar = true
 config.tab_max_width = 40
 
 -- Color and rendering settings
-config.color_scheme = "Catppuccin Frappe"
+config.color_scheme = "Everforest Dark (Gogh)"
+
+-- Colors
+config.colors = {
+	tab_bar = {
+		active_tab = {
+			bg_color = "#2f383e",
+			fg_color = "#d3c6aa",
+		},
+	},
+}
+
+-- config.color_scheme = "Everforest Dark Hard (Gogh)"
 config.front_end = "WebGpu"
 config.freetype_load_flags = "NO_HINTING"
 config.freetype_load_target = "Normal"
@@ -39,9 +51,17 @@ config.keys = {
 			local home = wezterm.home_dir
 			local workspaces = {
 				{ id = home .. "/.config", label = "config" },
+				{ id = home .. "/projects/admin-app", label = "admin-app" },
 				{ id = home .. "/projects/go-api", label = "go-api" },
 				{ id = home .. "/projects/service-partner", label = "service-partner" },
+				{ id = home .. "/projects/terrafrom", label = "terrafrom" },
 				{ id = home .. "/projects/service-partner-frontend", label = "service-partner-frontend" },
+				{ id = home .. "/projects/graphql", label = "graphql" },
+				{ id = home .. "/projects/foundatinon", label = "foundatinon" },
+				{ id = home .. "/projects/web-app", label = "web-app" },
+				{ id = home .. "/projects/anyservice-api", label = "anyservice-api" },
+				{ id = home .. "/projects/anyservice-fe-v2", label = "anyservice-frontend" },
+				{ id = home .. "/projects/bin", label = "bin" },
 			}
 			window:perform_action(
 				wezterm.action.InputSelector({

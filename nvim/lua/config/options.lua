@@ -48,6 +48,14 @@ filetype.add({
   },
 })
 
+-- Disables auto-commenting above and below the commented line
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "r", "o" })
+  end,
+})
+
 -- LSP settings
 -- In summary, this code configures Neovim to show diagnostic messages from the language server with underlines and signs, but not inline text or popups, and not while you're typing.
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {

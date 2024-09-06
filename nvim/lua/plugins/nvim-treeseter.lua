@@ -50,8 +50,12 @@ return {
         enable = true,
         -- FIXME: workarround for bad JSX indentation
         additional_vim_regex_highlighting = true,
-        disable = function(lang, buf)
-          return lang == "typescript" and vim.api.nvim_buf_line_count(buf) > 10000
+        disable = function(_, buf)
+          local max_filesize = 100 * 1024 -- 100kb
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
         end,
       },
       indent = {
