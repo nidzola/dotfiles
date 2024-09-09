@@ -8,6 +8,7 @@ return {
       },
       render = function(props)
         local mini_icons = require("mini.icons")
+        local modified = vim.bo[props.buf].modified
 
         local function get_filename()
           local filepath = vim.api.nvim_buf_get_name(props.buf)
@@ -17,16 +18,34 @@ return {
             filename = "[No Name]"
           end
           local ft_icon, ft_color = mini_icons.get("file", filename)
-          local modified = vim.bo[props.buf].modified
           return {
             " ",
-            { relative_filepath, gui = modified and "bold,italic" or "bold" },
+            {
+              modified and { relative_filepath .. " *", gui = "bold,italic", guifg = "#D8BA7E" }
+                or { relative_filepath, gui = "bold", guifg = "#D8BA7E" },
+            },
             " ",
             ft_icon and { ft_icon, " ", guibg = "none", group = ft_color } or "",
           }
         end
+        local function get_diagnostic_label()
+          local icons = { error = "", warn = "", info = "", hint = "" }
+          local label = {}
+
+          for severity, icon in pairs(icons) do
+            local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+            if n > 0 then
+              table.insert(label, { icon .. " " .. n .. " ", group = "DiagnosticSign" .. severity })
+            end
+          end
+          if #label > 0 then
+            table.insert(label, { "┊" })
+          end
+          return label
+        end
 
         return {
+          { get_diagnostic_label() },
           { get_filename() },
           group = props.focused and "ColorColumn" or "SignColumn",
         }
