@@ -7,6 +7,7 @@ return {
     config = function()
       require("everforest").setup({
         background = "hard",
+        float_style = "dim",
       })
     end,
   },
