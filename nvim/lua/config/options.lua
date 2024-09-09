@@ -15,6 +15,7 @@ opt.hidden = true
 opt.whichwrap = "b,s,<,>,[,],h,l"
 opt.iskeyword:append("-,_")
 opt.virtualedit = "block"
+opt.clipboard = ""
 
 -- Indentation settings
 opt.tabstop = 2

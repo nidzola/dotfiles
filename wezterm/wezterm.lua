@@ -39,6 +39,7 @@ config.use_dead_keys = false
 
 -- Keybindings
 config.keys = {
+	{ key = "f", mods = "ALT", action = wezterm.action.ToggleFullScreen },
 	{ key = "v", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
 	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },

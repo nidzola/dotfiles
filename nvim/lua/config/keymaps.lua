@@ -28,15 +28,10 @@ map("v", "<leader>Y", '"+y$', { noremap = true })
 map("n", "n", "nzzzv", { desc = "Next result" })
 map("n", "N", "Nzzzv", { desc = "Previous result" })
 
--- diagnostic
-local diagnostic_goto = function(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go({ severity = severity })
-  end
-end
-map("n", "ge", diagnostic_goto(true), { desc = "Next Diagnostic" })
+-- diagnostic remap
+map("n", "ge", function()
+  vim.diagnostic.goto_next()
+end, { desc = "Next Diagnostic" })
 
 -- Show dependency versions
 map(
