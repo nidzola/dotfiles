@@ -1,14 +1,3 @@
-local golangConfig = {
-  -- go install gotest.tools/gotestsum@latest
-  runner = "gotestsum",
-  go_test_args = {
-    "-v",
-    "-race",
-    "-count=1",
-    "-tags=test",
-  },
-}
-
 return {
   { "nvim-neotest/neotest-plenary" },
   {
@@ -25,7 +14,16 @@ return {
       },
       adapters = {
         "neotest-plenary",
-        require("neotest-golang")(golangConfig),
+        require("neotest-golang")({
+          -- go install gotest.tools/gotestsum@latest
+          runner = "gotestsum",
+          go_test_args = {
+            "-v",
+            "-race",
+            "-count=1",
+            "-tags=test",
+          },
+        }),
       },
     },
   },
