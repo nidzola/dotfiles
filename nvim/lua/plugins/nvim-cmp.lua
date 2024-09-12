@@ -45,6 +45,14 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "lukas-reineke/cmp-under-comparator",
+      {
+        "MattiasMTS/cmp-dbee",
+        dependencies = {
+          { "kndndrj/nvim-dbee" },
+        },
+        ft = "sql", -- optional but good to have
+        opts = {}, -- needed
+      },
     },
     version = false,
     event = "InsertEnter",
@@ -98,7 +106,7 @@ return {
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
+            behavior = cmp.ConfirmBehavior.Insert,
             select = true,
           }),
           -- Explicitly request completions.
@@ -136,6 +144,7 @@ return {
           { name = "crates" },
           { name = "buffer" },
           { name = "path" },
+          { name = "cmp-dbee" },
         }),
       })
       ---@diagnostic enable: missing-fields
