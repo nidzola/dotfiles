@@ -46,7 +46,7 @@ return {
       "taplo",
       "terraform-ls",
       "tflint",
-      "typescript-language-server",
+      -- "typescript-language-server", -- ts_ls (testing vtls)
       "vim-language-server",
       "vtsls",
       "yaml-language-server",

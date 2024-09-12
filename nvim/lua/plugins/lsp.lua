@@ -6,13 +6,27 @@ return {
     -- kill inlay hints
     inlay_hints = { enabled = false },
     setup = {
-      ts_ls = function(_, opts)
-        opts.init_options = {
-          preferences = {
-            importModuleSpecifierPreference = "non-relative",
+      vtsls = function(_, opts)
+        opts.settings = {
+          javascript = {
+            preferences = {
+              importModuleSpecifier = "non-relative",
+            },
+          },
+          typescript = {
+            preferences = {
+              importModuleSpecifier = "non-relative",
+            },
           },
         }
       end,
+      -- ts_ls = function(_, opts)
+      --   opts.init_options = {
+      --     preferences = {
+      --       importModuleSpecifierPreference = "non-relative",
+      --     },
+      --   }
+      -- end,
       gopls = function(_, opts)
         opts.settings = {
           gopls = {
