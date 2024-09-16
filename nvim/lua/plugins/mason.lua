@@ -45,7 +45,7 @@ return {
       "taplo",
       "terraform-ls",
       "tflint",
-      "typos_lsp",
+      "typos-lsp",
       "vim-language-server",
       "vtsls",
       "yaml-language-server",
