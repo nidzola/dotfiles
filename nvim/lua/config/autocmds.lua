@@ -28,3 +28,4 @@ vim.api.nvim_create_autocmd("User", {
     map_split(buf_id, "gv", "below right vertical")
   end,
 })
+
