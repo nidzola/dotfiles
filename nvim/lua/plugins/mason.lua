@@ -13,7 +13,6 @@ return {
       "delve",
       "docker-compose-language-service",
       "dockerfile-language-server",
-      "emmet-ls",
       "eslint-lsp",
       "eslint_d",
       "gofumpt",
@@ -46,10 +45,11 @@ return {
       "taplo",
       "terraform-ls",
       "tflint",
-      -- "typescript-language-server", -- ts_ls (testing vtls)
+      "typos_lsp",
       "vim-language-server",
       "vtsls",
       "yaml-language-server",
+      -- "typescript-language-server", -- ts_ls (testing vtls)
     },
   },
 }
