@@ -14,6 +14,7 @@ local map_split = function(buf_id, lhs, direction)
     end)
 
     MiniFiles.set_target_window(new_target_window)
+    MiniFiles.go_in()
   end
 
   -- Adding `desc` will result into `show_help` entries
@@ -24,8 +25,7 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesBufferCreate",
   callback = function(args)
     local buf_id = args.data.buf_id
-    map_split(buf_id, "gs", "below right horizontal")
-    map_split(buf_id, "gv", "below right vertical")
+    map_split(buf_id, "gs", "belowright horizontal")
+    map_split(buf_id, "gv", "belowright vertical")
   end,
 })
-
