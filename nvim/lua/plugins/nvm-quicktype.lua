@@ -7,6 +7,7 @@ return {
     require("nvim-quicktype").setup({
       global = {
         debug_dir = "/Users/nikola/debug",
+        clipboard_source_register = '"',
       },
     })
   end,
