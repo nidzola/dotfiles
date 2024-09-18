@@ -65,6 +65,12 @@ return {
 
       ---@diagnostic disable: missing-fields
       cmp.setup({
+        matching = {
+          disallow_fuzzy_matching = false, -- Allow fuzzy matching
+          disallow_exact_fuzzy_matching = false, -- Allow exact matches to be fuzzy-matched
+          disallow_prefix_unmatching = false, -- Allow partial prefixes
+          case_insensitive = true, -- Enable case-insensitive matching,
+        },
         performance = {
           debounce = 15, -- default is 60ms
           throttle = 15, -- default is 30ms
@@ -74,8 +80,16 @@ return {
         preselect = cmp.PreselectMode.None,
         -- Add icons to the completion menu.
         formatting = {
-          format = function(_, vim_item)
-            vim_item.kind = (symbol_kinds[vim_item.kind] or "") .. "  " .. vim_item.kind
+          format = function(entry, vim_item)
+            vim_item.kind = (symbol_kinds[vim_item.kind] or "") .. " " .. vim_item.kind
+
+            -- Adding more details f.e module name in go etc.
+            if entry.source.name == "nvim_lsp" then
+              local detail = entry.completion_item.detail
+              if detail then
+                vim_item.menu = " " .. detail
+              end
+            end
             return vim_item
           end,
         },
@@ -140,11 +154,10 @@ return {
           end,
         }),
         sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "crates" },
-          { name = "buffer" },
-          { name = "path" },
-          { name = "cmp-dbee" },
+          { name = "nvim_lsp", priority = 1000 },
+          { name = "buffer", priority = 900 },
+          { name = "path", priority = 800 },
+          { name = "cmp-dbee", priority = 700 },
         }),
       })
       ---@diagnostic enable: missing-fields

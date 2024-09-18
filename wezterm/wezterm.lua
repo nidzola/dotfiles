@@ -4,7 +4,6 @@ local config = {}
 -- Font and window settings
 config.font = wezterm.font("JetBrains Mono")
 config.font_size = 14
-config.window_decorations = "RESIZE"
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 -- disabling ligatures
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
