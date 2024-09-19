@@ -20,4 +20,6 @@
 !kitty/**/*
 !yazi/
 !yazi/**/*
+!lazygit/
+!lazygit/**/*
 /**/.DS_Store
