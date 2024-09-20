@@ -9,6 +9,7 @@ return {
       backdrop = 100,
     },
     files = {
+      cwd_header = true,
       git_icons = false,
       file_icons = true,
     },

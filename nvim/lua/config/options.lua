@@ -10,7 +10,7 @@ local lsp = vim.lsp
 -- File and buffer settings
 opt.termguicolors = true
 opt.fileencoding = "utf-8" -- File Encoding
-opt.autochdir = true
+opt.autochdir = false
 opt.hidden = true
 opt.whichwrap = "b,s,<,>,[,],h,l"
 opt.iskeyword:append("-,_")
@@ -41,6 +41,7 @@ opt.showbreak = "↪ "
 
 -- Leader key setting
 g.maplocalleader = " "
+g.root_spec = { "cwd" }
 
 -- Filetype settings
 filetype.add({
