@@ -23,4 +23,8 @@ return {
     "kristijanhusak/vim-dadbod-completion",
     enabled = false,
   },
+  {
+    "nvim-dap-virtual-text",
+    enabled = false,
+  },
 }
