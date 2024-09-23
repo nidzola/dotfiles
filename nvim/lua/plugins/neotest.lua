@@ -7,6 +7,10 @@ return {
       "nvim-neotest/neotest-plenary",
     },
     opts = {
+      quickfix = {
+        enabled = true,
+        open = false,
+      },
       discovery = {
         -- Drastically improve performance in ginormous projects by
         -- only AST-parsing the currently opened buffer.
