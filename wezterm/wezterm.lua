@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local config = {}
+local workspace_history = {}
 
 -- Font and window settings
 config.font = wezterm.font("JetBrains Mono")
@@ -38,61 +39,113 @@ config.freetype_render_target = "Normal"
 config.automatically_reload_config = true
 config.use_dead_keys = false
 
+local function get_projects_from_directory(path)
+	local projects = {
+		{ id = wezterm.home_dir .. "/.config", label = "config" },
+	}
+
+	local handle = io.popen("ls -d " .. path .. "/*/")
+	if handle then
+		for dir in handle:lines() do
+			local project_name = dir:match("^.*/([^/]+)/$")
+			if project_name then
+				table.insert(projects, { id = dir, label = project_name })
+			end
+		end
+		handle:close()
+	end
+
+	-- Move the last two workspaces to the top of the list
+	table.sort(projects, function(a, b)
+		-- Index of a and b in workspace_history
+		local a_index, b_index
+		for i, ws in ipairs(workspace_history) do
+			if ws.label == a.label then
+				a_index = i
+			end
+			if ws.label == b.label then
+				b_index = i
+			end
+		end
+
+		-- Last two workspaces should come first
+		if a_index and b_index then
+			return a_index < b_index
+		elseif a_index then
+			return true
+		elseif b_index then
+			return false
+		else
+			-- If neither is in history, sort alphabetically by label
+			return a.label < b.label
+		end
+	end)
+
+	return projects
+end
+
+-- Function to update workspace history for toggling
+local function update_workspace_history(id, label)
+	-- Remove the current workspace from history if it already exists
+	for i, ws in ipairs(workspace_history) do
+		if ws.label == label then
+			table.remove(workspace_history, i)
+			break
+		end
+	end
+
+	-- Insert the current workspace at the top
+	table.insert(workspace_history, 1, { id = id, label = label })
+
+	-- Keep only the last two workspaces for toggling
+	if #workspace_history > 2 then
+		table.remove(workspace_history, 3) -- Remove the oldest one
+	end
+end
+
+-- Function to switch between projects as workspaces
+wezterm.on("switch-to-project", function(window, pane)
+	local projects = get_projects_from_directory("/Users/nikola/projects")
+
+	-- Show the launcher to let the user fuzzy search and select a project workspace
+	window:perform_action(
+		wezterm.action.InputSelector({
+			action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+				if not id and not label then
+					wezterm.log_info("cancelled")
+				else
+					update_workspace_history(id, label)
+
+					wezterm.log_info("id = " .. id)
+					wezterm.log_info("label = " .. label)
+
+					inner_window:perform_action(
+						wezterm.action.SwitchToWorkspace({
+							name = label,
+							spawn = {
+								label = "Workspace: " .. label,
+								cwd = id,
+							},
+						}),
+						inner_pane
+					)
+				end
+			end),
+			title = "Choose Workspace",
+			choices = projects,
+			fuzzy = true,
+		}),
+		pane
+	)
+end)
+
 -- Keybindings
 config.keys = {
+	{ key = "o", mods = "ALT", action = wezterm.action.EmitEvent("switch-to-project") },
 	{ key = "f", mods = "ALT", action = wezterm.action.ToggleFullScreen },
 	{ key = "v", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
 	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
-	-- { key = "o", mods = "ALT", action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
-	{
-		key = "o",
-		mods = "ALT",
-		action = wezterm.action_callback(function(window, pane)
-			-- TODO: confiure this list dynamically
-			local home = wezterm.home_dir
-			local workspaces = {
-				{ id = home .. "/.config", label = "config" },
-				{ id = home .. "/projects/admin-app", label = "admin-app" },
-				{ id = home .. "/projects/go-api", label = "go-api" },
-				{ id = home .. "/projects/service-partner", label = "service-partner" },
-				{ id = home .. "/projects/terrafrom", label = "terrafrom" },
-				{ id = home .. "/projects/service-partner-frontend", label = "service-partner-frontend" },
-				{ id = home .. "/projects/graphql", label = "graphql" },
-				{ id = home .. "/projects/foundatinon", label = "foundatinon" },
-				{ id = home .. "/projects/web-app", label = "web-app" },
-				{ id = home .. "/projects/anyservice-api", label = "anyservice-api" },
-				{ id = home .. "/projects/anyservice-fe-v2", label = "anyservice-frontend" },
-				{ id = home .. "/projects/bin", label = "bin" },
-			}
-			window:perform_action(
-				wezterm.action.InputSelector({
-					action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
-						if not id and not label then
-							wezterm.log_info("cancelled")
-						else
-							wezterm.log_info("id = " .. id)
-							wezterm.log_info("label = " .. label)
-							inner_window:perform_action(
-								wezterm.action.SwitchToWorkspace({
-									name = label,
-									spawn = {
-										label = "Workspace: " .. label,
-										cwd = id,
-									},
-								}),
-								inner_pane
-							)
-						end
-					end),
-					title = "Choose Workspace",
-					choices = workspaces,
-					fuzzy = true,
-				}),
-				pane
-			)
-		end),
-	},
 	{ key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
 	{ key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
 	{ key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
@@ -107,18 +160,6 @@ config.keys = {
 			action = wezterm.action_callback(function(window, pane, line)
 				if line then
 					window:perform_action(wezterm.action.SwitchToWorkspace({ name = line }), pane)
-				end
-			end),
-		}),
-	},
-	{
-		key = "t",
-		mods = "ALT",
-		action = wezterm.action.PromptInputLine({
-			description = "Enter new name for tab",
-			action = wezterm.action_callback(function(window, _, line)
-				if line then
-					window:active_tab():set_title(line)
 				end
 			end),
 		}),
