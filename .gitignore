@@ -22,4 +22,6 @@
 !yazi/**/*
 !lazygit/
 !lazygit/**/*
+!aerospace/
+!aerospace/**/*
 /**/.DS_Store
