@@ -6,6 +6,7 @@ local workspace_history = {}
 config.font = wezterm.font("JetBrains Mono")
 config.font_size = 14
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+config.window_decorations = "RESIZE"
 -- disabling ligatures
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
@@ -15,6 +16,7 @@ config.show_tab_index_in_tab_bar = true
 config.show_tabs_in_tab_bar = true
 config.show_new_tab_button_in_tab_bar = true
 config.tab_max_width = 40
+config.hide_tab_bar_if_only_one_tab = false
 
 -- Color and rendering settings
 config.color_scheme = "Everforest Dark (Gogh)"
@@ -140,32 +142,21 @@ wezterm.on("switch-to-project", function(window, pane)
 end)
 
 -- Keybindings
+config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-	{ key = "o", mods = "ALT", action = wezterm.action.EmitEvent("switch-to-project") },
-	{ key = "f", mods = "ALT", action = wezterm.action.ToggleFullScreen },
-	{ key = "v", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
-	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
-	{ key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
-	{ key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
-	{ key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
-	{
-		key = "n",
-		mods = "ALT",
-		action = wezterm.action.PromptInputLine({
-			description = wezterm.format({
-				{ Attribute = { Intensity = "Bold" } },
-				{ Text = "Enter name for workspace" },
-			}),
-			action = wezterm.action_callback(function(window, pane, line)
-				if line then
-					window:perform_action(wezterm.action.SwitchToWorkspace({ name = line }), pane)
-				end
-			end),
-		}),
-	},
+	{ key = "-", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "/", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "o", mods = "LEADER", action = wezterm.action.EmitEvent("switch-to-project") },
+	{ key = "f", mods = "LEADER", action = wezterm.action.ToggleFullScreen },
+	{ key = "h", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Left") },
+	{ key = "p", mods = "LEADER", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
+	{ key = "k", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Up") },
+	{ key = "j", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Down") },
+	{ key = "l", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Right") },
+	{ key = "x", mods = "LEADER", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
+	{ key = "X", mods = "LEADER", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+	{ key = "n", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
 }
-
 -- Event handlers
 wezterm.on("format-tab-title", function(tab)
 	local cwd = string.match(tab.active_pane.current_working_dir.file_path, "/([^/]*)$")
