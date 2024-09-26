@@ -142,20 +142,20 @@ wezterm.on("switch-to-project", function(window, pane)
 end)
 
 -- Keybindings
-config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
+-- config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-	{ key = "-", mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "/", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "o", mods = "LEADER", action = wezterm.action.EmitEvent("switch-to-project") },
-	{ key = "f", mods = "LEADER", action = wezterm.action.ToggleFullScreen },
-	{ key = "h", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Left") },
-	{ key = "p", mods = "LEADER", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
-	{ key = "k", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Up") },
-	{ key = "j", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Down") },
-	{ key = "l", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Right") },
-	{ key = "x", mods = "LEADER", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
-	{ key = "X", mods = "LEADER", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
-	{ key = "n", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
+	{ key = "-", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "/", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "o", mods = "ALT", action = wezterm.action.EmitEvent("switch-to-project") },
+	{ key = "f", mods = "ALT", action = wezterm.action.ToggleFullScreen },
+	{ key = "h", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Left") },
+	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
+	{ key = "k", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Up") },
+	{ key = "j", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Down") },
+	{ key = "l", mods = "ALT", action = wezterm.action.ActivatePaneDirection("Right") },
+	{ key = "x", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
+	{ key = "X", mods = "ALT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
+	{ key = "n", mods = "ALT", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
 }
 -- Event handlers
 wezterm.on("format-tab-title", function(tab)
