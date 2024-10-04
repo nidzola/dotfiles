@@ -42,7 +42,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client ~= nil and client.supports_method("textDocument/publishDiagnostics") then
-      vim.notify("LSP attached: " .. client.name, "info", { title = "LSP" })
       -- In summary, this code configures Neovim to show diagnostic messages from the language server with underlines and signs, but not inline text or popups, and not while you're typing.
       client.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_lines = false,
