@@ -20,9 +20,11 @@ map("v", ">", ">gv", { desc = "Indent <", noremap = true, silent = false })
 map("n", "<leader>j", "<cmd>cnext<CR>zz", { desc = "QuickFixList Next" })
 map("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "QuickFixList Previous" })
 
--- copy to system clipboard
-map("v", "<leader>y", '"+y', { noremap = true })
-map("v", "<leader>Y", '"+y$', { noremap = true })
+-- prevent losing selection when pasting and deleting
+map("x", "p", '"_dP', { noremap = true, silent = true })
+map("n", "x", '"_x', { noremap = true, silent = true })
+map("n", "X", '"_X', { noremap = true, silent = true })
+map("n", "d", '"_d', { noremap = true, silent = true })
 
 -- centered search moving
 map("n", "n", "nzzzv", { desc = "Next result" })

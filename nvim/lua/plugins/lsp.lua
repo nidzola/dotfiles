@@ -20,13 +20,6 @@ return {
           },
         }
       end,
-      -- ts_ls = function(_, opts)
-      --   opts.init_options = {
-      --     preferences = {
-      --       importModuleSpecifierPreference = "non-relative",
-      --     },
-      --   }
-      -- end,
       gopls = function(_, opts)
         opts.settings = {
           gopls = {
