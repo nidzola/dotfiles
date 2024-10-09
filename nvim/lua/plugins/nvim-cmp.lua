@@ -82,12 +82,17 @@ return {
         formatting = {
           format = function(entry, vim_item)
             vim_item.kind = (symbol_kinds[vim_item.kind] or "") .. " " .. vim_item.kind
-
+            local function truncate(s, length)
+              if #s > length then
+                return s:sub(1, length) .. "..."
+              end
+              return s
+            end
             -- Adding more details f.e module name in go etc.
             if entry.source.name == "nvim_lsp" then
               local detail = entry.completion_item.detail
               if detail then
-                vim_item.menu = " " .. detail
+                vim_item.menu = " " .. truncate(detail, 70)
               end
             end
             return vim_item

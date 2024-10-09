@@ -24,7 +24,6 @@ map("n", "<leader>k", "<cmd>cprev<CR>zz", { desc = "QuickFixList Previous" })
 map("x", "p", '"_dP', { noremap = true, silent = true })
 map("n", "x", '"_x', { noremap = true, silent = true })
 map("n", "X", '"_X', { noremap = true, silent = true })
-map("n", "d", '"_d', { noremap = true, silent = true })
 
 -- centered search moving
 map("n", "n", "nzzzv", { desc = "Next result" })
