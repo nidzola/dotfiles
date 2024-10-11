@@ -55,7 +55,7 @@ alias z="zi"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOPRIVATE=github.com/transcarent
-export GOROOT=/opt/homebrew/Cellar/go/1.22.6/libexec
+export GOROOT=/opt/homebrew/Cellar/go/1.23.2/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
@@ -74,6 +74,15 @@ eval "$(luarocks path --bin)"
 
 # vi-mode
 bindkey -v
+
+# Yank to the system clipboard
+function vi-yank-xclip {
+    zle vi-yank
+   echo "$CUTBUFFER" | pbcopy -i
+}
+
+zle -N vi-yank-xclip
+bindkey -M vicmd 'y' vi-yank-xclip
 KEYTIMEOUT=1
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
