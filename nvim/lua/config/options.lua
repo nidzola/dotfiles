@@ -5,6 +5,7 @@
 local opt = vim.opt
 local g = vim.g
 local filetype = vim.filetype
+local o = vim.o
 
 -- File and buffer settings
 opt.termguicolors = true
@@ -41,6 +42,8 @@ opt.showbreak = "↪ "
 -- Leader key setting
 g.maplocalleader = " "
 g.root_spec = { "cwd" }
+
+o.swapfile = false
 
 -- Filetype settings
 filetype.add({
