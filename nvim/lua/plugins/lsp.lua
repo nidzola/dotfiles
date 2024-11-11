@@ -42,15 +42,15 @@ return {
             staticcheck = true,
           },
         }
-        -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
-        for _, v in pairs(opts) do
-          if type(v) == "table" and v.workspace then
-            v.workspace.didChangeWatchedFiles = {
-              dynamicRegistration = false,
-              relativePatternSupport = false,
-            }
-          end
-        end
+        -- -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
+        -- for _, v in pairs(opts) do
+        --   if type(v) == "table" and v.workspace then
+        --     v.workspace.didChangeWatchedFiles = {
+        --       dynamicRegistration = false,
+        --       relativePatternSupport = false,
+        --     }
+        --   end
+        -- end
       end,
     },
   },
