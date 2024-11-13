@@ -1,9 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
-    -- FIXME: this is not working
-    -- disable LSP word highlight under the cursor
-    document_highlight = false,
     -- kill inlay hints
     inlay_hints = { enabled = false },
     setup = {
