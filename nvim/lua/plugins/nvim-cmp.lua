@@ -40,6 +40,7 @@ end
 return {
   {
     "hrsh7th/nvim-cmp",
+    enabled = true,
     dependencies = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
@@ -81,7 +82,12 @@ return {
         -- Add icons to the completion menu.
         formatting = {
           format = function(entry, vim_item)
-            vim_item.kind = (symbol_kinds[vim_item.kind] or "") .. " " .. vim_item.kind
+            if vim_item == nil then
+              return {}
+            end
+            if vim_item.kind then
+              vim_item.kind = (symbol_kinds[vim_item.kind] or "") .. " " .. vim_item.kind
+            end
             local function truncate(s, length)
               if #s > length then
                 return s:sub(1, length) .. "..."
