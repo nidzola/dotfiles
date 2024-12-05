@@ -60,6 +60,7 @@ return {
     config = function()
       local cmp = require("cmp")
       local types = require("cmp.types")
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
       -- Inside a snippet, use backspace to remove the placeholder.
       vim.keymap.set("s", "<BS>", "<C-O>s")
@@ -73,8 +74,9 @@ return {
           case_insensitive = true, -- Enable case-insensitive matching,
         },
         performance = {
-          debounce = 15, -- default is 60ms
-          throttle = 15, -- default is 30ms
+          debounce = 10, -- default is 60ms
+          throttle = 10, -- default is 30ms
+          max_view_entries = 100, -- default is 300
         },
         -- Disable preselect. On enter, the first thing will be used if nothing
         -- is selected.
@@ -172,6 +174,9 @@ return {
         }),
       })
       ---@diagnostic enable: missing-fields
+
+      -- Autopairs integration
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end,
   },
 }
