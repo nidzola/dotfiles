@@ -5,7 +5,7 @@
 !.zshrc
 !.tmux.conf
 !.rgignore
-!.install.sh
+!install.sh
 
 !scripts/
 !scripts/**
