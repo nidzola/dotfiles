@@ -55,7 +55,7 @@ alias z="zi"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export GOPRIVATE=github.com/transcarent
-export GOROOT=/opt/homebrew/Cellar/go/1.23.3/libexec
+export GOROOT=/opt/homebrew/Cellar/go/1.23.4/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
@@ -66,6 +66,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.1.7/terraform terraform
 export GOOGLE_APPLICATION_CREDENTIALS=/Users/nikola/.gcp/dev-gcp.json
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
