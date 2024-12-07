@@ -47,8 +47,9 @@ alias gpm='git pull origin main'
 alias v='nvim $1'
 alias vc='nvim ~/.config/nvim'
 alias vzsh='nvim ~/.zshrc'
-alias ll="eza -l"
-alias ls="eza"
+alias ll="eza --long --color=always --icons=always"
+alias ls="eza --long --color=always --icons=always"
+alias l="eza --long --color=always --icons=always"
 alias cat="bat"
 alias z="zi"
 
