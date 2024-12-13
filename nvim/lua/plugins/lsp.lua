@@ -29,13 +29,6 @@ return {
               shadow = true,
               unusedwrite = true,
             },
-            codelenses = {
-              gc_details = true,
-              regenerate_cgo = true,
-              tidy = true,
-              upgrade_dependency = true,
-              vendor = true,
-            },
             deepCompletion = true,
             staticcheck = true,
           },
