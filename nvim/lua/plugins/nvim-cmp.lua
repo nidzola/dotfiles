@@ -38,6 +38,7 @@ local function deprio(kind)
 end
 
 return {
+
   {
     "hrsh7th/nvim-cmp",
     enabled = false,
@@ -46,14 +47,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "lukas-reineke/cmp-under-comparator",
-      {
-        "MattiasMTS/cmp-dbee",
-        dependencies = {
-          { "kndndrj/nvim-dbee" },
-        },
-        ft = "sql", -- optional but good to have
-        opts = {}, -- needed
-      },
     },
     version = false,
     event = "InsertEnter",
@@ -170,7 +163,6 @@ return {
           { name = "nvim_lsp", priority = 1000 },
           { name = "buffer", priority = 900 },
           { name = "path", priority = 800 },
-          { name = "cmp-dbee", priority = 700 },
         }),
       })
       ---@diagnostic enable: missing-fields
