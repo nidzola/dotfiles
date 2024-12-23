@@ -8,6 +8,9 @@ return {
       require("everforest").setup({
         background = "hard",
         float_style = "dim",
+        on_highlights = function(highlight_groups, palette)
+          highlight_groups.NormalFloat = { bg = palette.bg0 }
+        end,
       })
     end,
   },

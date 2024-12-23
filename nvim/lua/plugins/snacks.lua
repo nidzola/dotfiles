@@ -11,11 +11,17 @@ return {
         enabled = false,
       },
     },
+    lazygit = { enabled = true },
     input = { enabled = true },
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scroll = { enabled = false },
     statuscolumn = { enabled = true },
-    words = { enabled = true },
+    scratch = {
+      enabled = true,
+      minimal = true,
+    },
+    words = { enabled = false },
+    zen = { enabled = false },
   },
 }

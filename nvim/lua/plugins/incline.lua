@@ -1,6 +1,8 @@
+-- Incline plugin configuration
 return {
   "b0o/incline.nvim",
   config = function()
+    -- Setup Incline with custom configuration
     require("incline").setup({
       hide = {
         cursorline = true,
@@ -10,11 +12,16 @@ return {
         margin = { horizontal = 0 },
       },
       render = function(props)
+        -- Load required modules
         local mini_icons = require("mini.icons")
-        local modified = vim.bo[props.buf].modified
 
+        -- Get buffer properties
+        local buf = props.buf
+        local modified = vim.bo[buf].modified
+
+        -- Function to get the filename and its display properties
         local function get_filename()
-          local filepath = vim.api.nvim_buf_get_name(props.buf)
+          local filepath = vim.api.nvim_buf_get_name(buf)
           local relative_filepath = vim.fn.fnamemodify(filepath, ":~:.")
           local filename = vim.fn.fnamemodify(filepath, ":t")
           if filename == "" then
@@ -31,14 +38,16 @@ return {
             ft_icon and { ft_icon, " ", guibg = "none", group = ft_color } or "",
           }
         end
+        -- Function to get diagnostic labels for the buffer
         local function get_diagnostic_label()
-          local icons = { error = "", warn = "", info = "", hint = "" }
+          local diagnostic_icons = { error = "", warn = "", info = "", hint = "" }
           local label = {}
 
-          for severity, icon in pairs(icons) do
-            local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
-            if n > 0 then
-              table.insert(label, { icon .. " " .. n .. " ", group = "DiagnosticSign" .. severity })
+          for severity, icon in pairs(diagnostic_icons) do
+            local severity_level = vim.diagnostic.severity[string.upper(severity)]
+            local diagnostic_count = #vim.diagnostic.get(buf, { severity = severity_level })
+            if diagnostic_count > 0 then
+              table.insert(label, { icon .. " " .. diagnostic_count .. " ", group = "DiagnosticSign" .. severity })
             end
           end
           if #label > 0 then
