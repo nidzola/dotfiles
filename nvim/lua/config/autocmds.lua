@@ -60,4 +60,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       })
     end
   end,
+  pattern = "MiniFilesActionRename",
+  callback = function(event)
+    Snacks.rename.on_rename_file(event.data.from, event.data.to)
+  end,
 })
