@@ -2,6 +2,21 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
+  -- opts = function()
+  --   -- Toggle the profiler
+  --   Snacks.toggle.profiler():map("<leader>pp")
+  --   -- Toggle the profiler highlights
+  --   Snacks.toggle.profiler_highlights():map("<leader>ph")
+  -- end,
+  -- keys = {
+  --   {
+  --     "<leader>ps",
+  --     function()
+  --       Snacks.profiler.scratch()
+  --     end,
+  --     desc = "Profiler Scratch Buffer",
+  --   },
+  -- },
   opts = {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
@@ -16,7 +31,7 @@ return {
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scroll = { enabled = false },
-    statuscolumn = { enabled = true },
+    statuscolumn = { enabled = false },
     scratch = {
       enabled = true,
       minimal = true,
