@@ -76,14 +76,6 @@ return {
       hl = { fg = colors.yellow, bg = colors.bg2, bold = true },
     }
 
-    -- Define Cursor Position component
-    local cursor_position = {
-      provider = function()
-        return string.format(" L%3d:C%3d ", vim.fn.line("."), vim.fn.col("."))
-      end,
-      hl = { fg = colors.yellow, bg = colors.bg2, bold = true },
-    }
-
     local dap_status = {
       provider = function()
         local dap_exists = pcall(require, "dap")
@@ -99,14 +91,28 @@ return {
       hl = { bg = colors.bg2, fg = colors.red, bold = true },
     }
 
-    -- Define Copilot component (show icon if active)
     local copilot_icon = {
       provider = function()
         local copilot_exists = pcall(require, "copilot")
         if copilot_exists and require("copilot.client").buf_is_attached() then
-          return "   |" -- Copilot icon (from Nerd Fonts)
+          return "   "
         end
         return ""
+      end,
+      hl = { bg = colors.bg2, fg = colors.yellow, bold = true },
+    }
+
+    local char_count = {
+      provider = function()
+        if vim.fn.mode():find("[Vv]") == nil then
+          return ""
+        end
+
+        local starts = vim.fn.line("v")
+        local ends = vim.fn.line(".")
+        local count = starts <= ends and ends - starts + 1 or starts - ends + 1
+        local wc = vim.fn.wordcount()
+        return count .. ":" .. wc["visual_chars"]
       end,
       hl = { bg = colors.bg2, fg = colors.yellow, bold = true },
     }
@@ -119,8 +125,8 @@ return {
 
       -- Right side
       dap_status,
+      char_count,
       copilot_icon,
-      cursor_position,
     }
 
     -- Setup Heirline
