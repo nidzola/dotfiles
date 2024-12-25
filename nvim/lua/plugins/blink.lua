@@ -59,6 +59,12 @@ return {
           return item.kind ~= require("blink.cmp.types").CompletionItemKind.Snippet
         end, items)
       end,
+      providers = {
+        lsp = { enabled = true },
+        path = { enabled = true },
+        buffer = { enabled = true },
+        copilot = { enabled = false },
+      },
     },
   },
 }
