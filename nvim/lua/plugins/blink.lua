@@ -8,6 +8,9 @@ return {
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
+    fuzzy = {
+      sorts = { "label", "kind", "score" },
+    },
     appearance = {
       use_nvim_cmp_as_default = false,
       nerd_font_variant = "mono",
