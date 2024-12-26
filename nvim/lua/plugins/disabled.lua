@@ -8,6 +8,18 @@ return {
     enabled = false,
   },
   {
+    "kristijanhusak/vim-dadbod-ui",
+    enabled = false,
+  },
+  {
+    "vim-dadbod",
+    enabled = false,
+  },
+  {
+    "tpope/vim-dadbod",
+    enabled = false,
+  },
+  {
     "nvim-dap-virtual-text",
     enabled = false,
   },

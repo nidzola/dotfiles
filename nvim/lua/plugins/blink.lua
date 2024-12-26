@@ -66,7 +66,11 @@ return {
         lsp = { enabled = true },
         path = { enabled = true },
         buffer = { enabled = true },
+
+        -- disabled providers
+        snippets = { enabled = false },
         copilot = { enabled = false },
+        dadbod = { enabled = false },
       },
     },
   },
