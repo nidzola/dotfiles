@@ -4,10 +4,17 @@ return {
   opts = {
     default_format_opts = {
       lsp_fallback = true,
-      timeout_ms = 1500, -- 3 second default is too long.
+      timeout_ms = 3000,
+    },
+    formatters = {
+      sqlfluff = {
+        command = "sqlfluff",
+        require_cwd = false,
+      },
     },
     formatters_by_ft = {
       go = { "goimports", "gofmt" },
+      sql = { "sqlfluff" },
     },
   },
 }

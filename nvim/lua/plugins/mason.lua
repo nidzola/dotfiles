@@ -48,7 +48,6 @@ return {
       "vim-language-server",
       "vtsls",
       "yaml-language-server",
-      -- "typescript-language-server", -- ts_ls (testing vtls)
     },
   },
 }
