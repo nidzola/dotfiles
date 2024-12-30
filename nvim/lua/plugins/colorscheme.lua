@@ -10,6 +10,10 @@ return {
         float_style = "dim",
         on_highlights = function(highlight_groups, palette)
           highlight_groups.NormalFloat = { bg = palette.bg0 }
+          highlight_groups.DapUIVariable = { fg = "#7fbbb3", bg = "#1b2b34", bold = true }
+          highlight_groups.DapUIValue = { fg = "#d699b6", bg = "#1b2b34" }
+          highlight_groups.DapUIScope = { fg = "#7fbbb3", bg = "#1b2b34", bold = true }
+          highlight_groups.DapUIType = { fg = "#a3be8c", bg = "#1b2b34", italic = true }
         end,
       })
     end,
