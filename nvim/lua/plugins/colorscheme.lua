@@ -27,6 +27,10 @@ return {
   },
   -- disabling other default lazyvim themes
   {
+    "catppuccin",
+    enabled = false,
+  },
+  {
     "catppuccin/nvim",
     enabled = false,
   },
