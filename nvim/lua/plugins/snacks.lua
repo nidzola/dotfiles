@@ -17,7 +17,6 @@ return {
       notifier = { enabled = true },
       quickfile = { enabled = true },
       scroll = { enabled = false },
-      statuscolumn = { enabled = false },
       scratch = {
         enabled = true,
         minimal = true,

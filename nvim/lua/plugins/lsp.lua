@@ -18,6 +18,11 @@ return {
           },
         }
       end,
+      graphql = function(_, opts)
+        opts.root_dir = function(fname)
+          return vim.fn.getcwd() -- or any other logic to determine the root directory
+        end
+      end,
       gopls = function(_, opts)
         opts.settings = {
           gopls = {

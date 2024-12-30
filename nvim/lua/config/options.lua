@@ -39,9 +39,6 @@ opt.linebreak = true
 opt.breakindent = true
 opt.showbreak = "↪ "
 
-opt.statuscolumn = "%s %r  "
-opt.signcolumn = "yes:2"
-
 -- Leader key setting
 g.maplocalleader = " "
 g.root_spec = { "cwd" }
