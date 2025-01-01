@@ -29,6 +29,11 @@ map("n", "X", '"_X', { noremap = true, silent = true })
 map("n", "n", "nzzzv", { desc = "Next result" })
 map("n", "N", "Nzzzv", { desc = "Previous result" })
 
+map("n", "<leader>cp", function()
+  vim.api.nvim_call_function("setreg", { "+", vim.fn.fnamemodify(vim.fn.expand("%"), ":.") })
+  vim.notify("Copied path to clipboard")
+end, { noremap = true, desc = "Copy relative path to clipboard" })
+
 -- diagnostic remap
 map("n", "ge", function()
   vim.diagnostic.goto_next()
