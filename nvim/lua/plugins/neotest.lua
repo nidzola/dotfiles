@@ -1,12 +1,14 @@
 return {
-  { "nvim-neotest/neotest-plenary" },
-  {
-    "nvim-neotest/neotest",
-    dependencies = {
-      "fredrikaverpil/neotest-golang",
-      "nvim-neotest/neotest-plenary",
-    },
-    opts = {
+  "nvim-neotest/neotest",
+  dependencies = {
+    "fredrikaverpil/neotest-golang",
+    "nvim-neotest/neotest-plenary",
+    "nvim-neotest/neotest-jest",
+    "antoinemadec/FixCursorHold.nvim",
+  },
+  ---@diagnostic disable: missing-fields
+  config = function()
+    require("neotest").setup({
       quickfix = {
         enabled = true,
         open = false,
@@ -17,7 +19,7 @@ return {
         enabled = true,
       },
       adapters = {
-        "neotest-plenary",
+        require("neotest-plenary"),
         require("neotest-golang")({
           -- go install gotest.tools/gotestsum@latest
           runner = "gotestsum",
@@ -28,7 +30,15 @@ return {
             "-tags=test",
           },
         }),
+        require("neotest-jest")({
+          jestCommand = "npm test --",
+          jestConfigFile = "custom.jest.config.ts",
+          env = { CI = true },
+          cwd = function()
+            return vim.fn.getcwd()
+          end,
+        }),
       },
-    },
-  },
+    })
+  end,
 }
