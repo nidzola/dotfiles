@@ -45,6 +45,9 @@ g.root_spec = { "cwd" }
 
 o.swapfile = false
 
+-- normal JSON
+opt.conceallevel = 0
+
 -- Filetype settings
 filetype.add({
   extension = {
