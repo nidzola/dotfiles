@@ -16,7 +16,6 @@ return {
       input = { enabled = true },
       notifier = { enabled = true },
       quickfile = { enabled = true },
-      picker = { enabled = false },
       scroll = { enabled = false },
       scratch = {
         enabled = true,
@@ -24,6 +23,26 @@ return {
       },
       words = { enabled = false },
       zen = { enabled = false },
+      ---@class snacks.picker.Config
+      picker = {
+        enabled = false,
+        layout = {
+          layout = {
+            backdrop = false,
+            width = 0.8,
+            min_width = 80,
+            height = 0.8,
+            min_height = 30,
+            box = "vertical",
+            border = "rounded",
+            title = "{title} {live} {flags}",
+            title_pos = "center",
+            { win = "input", height = 1, border = "bottom" },
+            { win = "list", border = "none" },
+            { win = "preview", title = "{preview}", height = 0.65, border = "top" },
+          },
+        },
+      },
     }
 
     -- Toggle the profiler

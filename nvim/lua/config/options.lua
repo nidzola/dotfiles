@@ -42,6 +42,7 @@ opt.showbreak = "↪ "
 -- Leader key setting
 g.maplocalleader = " "
 g.root_spec = { "cwd" }
+g.lazyvim_picker = "snacks"
 
 o.swapfile = false
 
