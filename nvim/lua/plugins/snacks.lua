@@ -25,6 +25,11 @@ return {
       zen = { enabled = false },
       ---@class snacks.picker.Config
       picker = {
+        sources = {
+          files = {
+            hidden = true,
+          },
+        },
         enabled = false,
         layout = {
           layout = {
