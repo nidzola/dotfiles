@@ -25,3 +25,6 @@
 !aerospace/
 !aerospace/**/*
 /**/.DS_Store
+
+!linux/
+!linux/**/*
