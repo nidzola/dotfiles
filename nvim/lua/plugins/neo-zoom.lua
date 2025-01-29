@@ -13,17 +13,11 @@ return {
           width = 0.9,
           height = 0.9,
         },
-        border = "thicc", -- this is a preset, try it :)
+        border = "thicc",
         style = "minimal",
         winblend = 0,
       },
       presets = {
-        {
-          filetypes = { "dapui_.*", "dap-repl" },
-          winopts = {
-            offset = { top = 0.02, left = 0.26, width = 0.74, height = 0.25 },
-          },
-        },
         {
           filetypes = { "markdown" },
           callbacks = {
