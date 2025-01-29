@@ -52,7 +52,7 @@
   "nvim-dap-virtual-text": { "branch": "master", "commit": "3497eb39bf413a57ab5b7e7e2e192683e462148c" },
   "nvim-early-retirement": { "branch": "main", "commit": "9ae6fcc933fc865ddf2728460194b67985e06e27" },
   "nvim-lint": { "branch": "master", "commit": "789b7ada1b4f00e08d026dffde410dcfa6a0ba87" },
-  "nvim-lspconfig": { "branch": "master", "commit": "9962e25a23f0e992116b99a9a6400947d5a7177b" },
+  "nvim-lspconfig": { "branch": "master", "commit": "bf81bef7d75a0f4a0cf61462b318ea00b3c97cc8" },
   "nvim-nio": { "branch": "master", "commit": "21f5324bfac14e22ba26553caf69ec76ae8a7662" },
   "nvim-quicktype": { "branch": "main", "commit": "82ccd4d252c2f2e8703ff1b726f931658f7060f2" },
   "nvim-treesitter": { "branch": "master", "commit": "13f4346876f394973ff676670304a2b734174538" },
@@ -75,7 +75,7 @@
   "undotree": { "branch": "master", "commit": "2556c6800b210b2096b55b66e74b4cc1d9ebbe4f" },
   "venv-selector.nvim": { "branch": "regexp", "commit": "c43dc6bf8c7e7cf124a991775ed3defe87112d3a" },
   "vim-dadbod": { "branch": "master", "commit": "f740950d0703099e0f172016f10e0e39f50fd0ba" },
-  "vim-dadbod-completion": { "branch": "master", "commit": "95cbcf21ea7a5c8c025f387280c2e261b8cb3a89" },
+  "vim-dadbod-completion": { "branch": "master", "commit": "c7f1be21a08b8fc9d927a19db89a4aa995402787" },
   "vim-dadbod-ui": { "branch": "master", "commit": "0fec59e3e1e619e302198cd491b7d27f8d398b7c" },
   "which-key.nvim": { "branch": "main", "commit": "0e76a87ac51772569aec678dc74baa8e2a86100c" }
 }

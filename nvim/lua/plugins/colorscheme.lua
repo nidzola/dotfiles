@@ -18,7 +18,7 @@ return {
           highlight_groups.SnacksPickerDir = { fg = palette.grey1, bg = palette.bg0, italic = false }
           highlight_groups.SnacksPickerCol = { fg = palette.grey1, bg = palette.bg0, italic = false }
           highlight_groups.SnacksPickerIndent = { fg = palette.grey1, bg = palette.bg0, italic = false }
-          highlight_groups.SnacksPickerMatch = { fg = palette.yellow, bg = palette.bg0, italic = false, bold = true }
+          highlight_groups.SnacksPickerMatch = { fg = palette.green, bg = palette.bg0, italic = false, bold = true }
         end,
       })
     end,

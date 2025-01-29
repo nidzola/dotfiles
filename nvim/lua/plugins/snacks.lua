@@ -30,7 +30,7 @@ return {
             hidden = true,
           },
         },
-        enabled = false,
+        enabled = true,
         layout = {
           layout = {
             backdrop = false,
