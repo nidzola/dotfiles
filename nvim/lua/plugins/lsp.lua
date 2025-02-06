@@ -36,6 +36,7 @@ return {
             },
             deepCompletion = true,
             staticcheck = true,
+            buildFlags = { "-tags=test" },
           },
         }
       end,
