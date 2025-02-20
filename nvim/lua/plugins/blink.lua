@@ -51,8 +51,6 @@ return {
 
     sources = {
       default = { "lsp", "path", "buffer" },
-      -- disable cmd completion
-      cmdline = {},
       -- disable snippets
       transform_items = function(_, items)
         return vim.tbl_filter(function(item)
