@@ -107,6 +107,13 @@ echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee 
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 sudo apt update && sudo apt install -y google-cloud-sdk
 
+# Install Terraform v1.6.2
+echo "Installing Terraform v1.6.2..."
+wget https://releases.hashicorp.com/terraform/1.6.2/terraform_1.6.2_linux_amd64.zip
+unzip terraform_1.6.2_linux_amd64.zip
+sudo mv terraform /usr/local/bin/
+rm terraform_1.6.2_linux_amd64.zip
+
 # Clean up
 echo "Cleaning up..."
 sudo apt autoremove -y && sudo apt clean
