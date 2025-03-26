@@ -16,7 +16,7 @@ sudo systemctl enable lightdm
 
 # Install essential packages
 echo "Installing essential packages..."
-sudo apt install -y git curl wget zsh neovim tmux build-essential htop fzf ripgrep
+sudo apt install -y git curl wget zsh neovim tmux build-essential htop fzf ripgrep rsync
 
 # Set up Zsh as default shell
 echo "Setting Zsh as default shell..."
@@ -66,16 +66,16 @@ sudo apt install -y golang-go
 # Install Go tools
 echo "Installing Go tools..."
 go install github.com/vektra/mockery/v2@latest
-go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
 go install github.com/google/wire/cmd/wire@latest
 
 # Install env tools
 echo "Installing efenv..."
 git clone https://github.com/efenv/efenv.git $HOME/.efenv && cd $HOME/.efenv && make install
 
-# Install PostgreSQL and pgvector
-echo "Installing PostgreSQL and pgvector..."
-sudo apt install -y postgresql postgresql-contrib
+# Install PostgreSQL 13 and pgvector
+echo "Installing PostgreSQL 13 and pgvector..."
+sudo apt install -y postgresql-13 postgresql-client-13 postgresql-contrib-13
 sudo systemctl enable --now postgresql
 sudo -u postgres psql -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
