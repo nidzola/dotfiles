@@ -18,6 +18,14 @@ sudo systemctl enable lightdm
 echo "Installing essential packages..."
 sudo apt install -y git curl wget zsh neovim tmux build-essential htop fzf ripgrep rsync
 
+# Install Zsh plugins
+echo "Installing Zsh plugins..."
+sudo apt install -y zsh-syntax-highlighting zsh-autosuggestions zsh-vi-mode
+
+# Install Zoxide (smart directory jumper)
+echo "Installing Zoxide..."
+curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+
 # Set up Zsh as default shell
 echo "Setting Zsh as default shell..."
 chsh -s $(which zsh)
@@ -27,6 +35,10 @@ echo "Installing Oh My Zsh..."
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
+
+# Install ZI (Zsh plugin manager)
+echo "Installing ZI..."
+sh -c "$(curl -fsSL https://git.io/get-zi)"
 
 # Install and configure firewall
 echo "Setting up firewall..."
