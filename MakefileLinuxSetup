@@ -171,4 +171,4 @@ copy-dotfiles:
 	cp -rf $$HOME/projects/dotfiles/linux/nvim $$HOME/.config
 	cp $$HOME/projects/dotfiles/linux/.tmux.conf $$HOME/
 	cp -rf $$HOME/projects/dotfiles/lazygit $$HOME/.config
-	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
+	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
