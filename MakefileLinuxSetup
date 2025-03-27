@@ -1,0 +1,171 @@
+# Makefile
+
+.PHONY: all enable-services update-system install-packages setup-git setup-zsh \
+        install-tailscale install-node install-go install-tfenv install-postgresql \
+        install-redis install-protobuf install-gcloud install-rust install-lazygit \
+        cleanup copy-dotfiles
+
+all: enable-services update-system install-packages setup-git setup-zsh \
+     install-tailscale install-node install-go install-tfenv install-postgresql \
+     install-redis install-protobuf install-gcloud install-rust install-lazygit \
+     cleanup copy-dotfiles
+	@echo "Setup complete! Reboot recommended."
+
+enable-services:
+	@echo "Enabling services..."
+	sudo systemctl enable --now bluetooth
+	sudo systemctl enable --now sshd
+	# disable sleep and hibernate
+	sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
+update-system:
+	@echo "Updating system..."
+	sudo pacman -Syu --noconfirm
+
+install-packages:
+	@echo "Installing essential packages..."
+	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm
+
+setup-git:
+	@echo "Setting up Git..."
+	git config --global user.name "Nikola Zivkovic"
+	git config --global user.email "x-nikola.zivkovic@transcarent.ai"
+
+setup-zsh:
+	@echo "Setting up Zsh..."
+	sudo pacman -S --noconfirm zsh-syntax-highlighting zsh-autosuggestions
+	@if [ ! -d "$$HOME/.oh-my-zsh" ]; then \
+		sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; \
+	fi
+	# in order to execute this below it needs to be rerun where in zsh 
+	@echo "Setting up Zsh plugins..."
+
+setup-zshrc:
+	@echo "Setting up Zsh configuration..."
+	# Add custom Zsh configuration
+	rm -f $$HOME/.zshrc
+	echo 'export ZSH="$$HOME/.oh-my-zsh"' >> $$HOME/.zshrc
+	echo 'ZSH_THEME="robbyrussell"' >> $$HOME/.zshrc
+	echo 'CASE_SENSITIVE="true"' >> $$HOME/.zshrc
+	echo "zstyle ':omz:update' frequency 5" >> $$HOME/.zshrc
+	echo 'ZVM_INIT_MODE=sourcing' >> $$HOME/.zshrc
+	echo 'setopt HIST_IGNORE_ALL_DUPS' >> $$HOME/.zshrc
+	echo 'setopt HIST_IGNORE_SPACE' >> $$HOME/.zshrc
+	echo 'setopt HIST_REDUCE_BLANKS' >> $$HOME/.zshrc
+	echo 'setopt SHARE_HISTORY' >> $$HOME/.zshrc
+	echo 'export LANG=en_US.UTF-8' >> $$HOME/.zshrc
+	echo 'plugins=(git)' >> $$HOME/.zshrc
+	echo 'source $$ZSH/oh-my-zsh.sh' >> $$HOME/.zshrc
+	echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
+	echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
+	echo 'source /usr/share/fzf/key-bindings.zsh' >> $$HOME/.zshrc
+	echo 'export NVM_DIR="$$HOME/.nvm"' >> $$HOME/.zshrc
+	echo 'source /usr/share/nvm/init-nvm.sh' >> $$HOME/.zshrc
+	echo 'export EDITOR=nvim' >> $$HOME/.zshrc
+	echo 'alias y="yazi"' >> $$HOME/.zshrc
+	echo 'alias gs="git status"' >> $$HOME/.zshrc
+	echo 'alias gdb="git branch -D $1"' >> $$HOME/.zshrc
+	echo 'alias gcob="git checkout $1"' >> $$HOME/.zshrc
+	echo 'alias gcom="git checkout main"' >> $$HOME/.zshrc
+	echo 'alias gpm="git pull origin main"' >> $$HOME/.zshrc
+	echo 'alias v="nvim $1"' >> $$HOME/.zshrc
+	echo 'alias vc="nvim ~/.config/nvim"' >> $$HOME/.zshrc
+	echo 'alias vzsh="nvim ~/.zshrc"' >> $$HOME/.zshrc
+	echo 'alias ll="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
+	echo 'alias ls="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
+	echo 'alias l="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
+	echo 'alias cat="bat"' >> $$HOME/.zshrc
+	echo 'alias z="zi"' >> $$HOME/.zshrc
+	echo 'export XDG_CONFIG_HOME="$$HOME/.config"' >> $$HOME/.zshrc
+	@echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
+	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
+	echo 'eval "$$(zoxide init zsh)"' >> $$HOME/.zshrc
+	@echo "Don't forget to run 'source ~/.zshrc' to apply the changes."
+
+install-yay:
+	@echo "Checking if yay is installed..."
+	@if ! command -v yay &> /dev/null; then \
+		echo "yay not found, installing yay..."; \
+		sudo pacman -S --noconfirm git base-devel; \
+		git clone https://aur.archlinux.org/yay.git $$HOME/.yay; \
+		cd $$HOME/.yay && makepkg -si --noconfirm; \
+		cd $$HOME && rm -rf $$HOME/.yay; \
+	else \
+		echo "yay is already installed!"; \
+	fi
+
+install-tailscale:
+	@echo "Installing Tailscale..."
+	curl -fsSL https://tailscale.com/install.sh | sh
+	sudo systemctl enable --now tailscaled
+
+install-node:
+	@echo "Installing Node.js and npm..."
+	sudo pacman -S --noconfirm nodejs npm
+
+install-go:
+	@echo "Installing Go..."
+	sudo pacman -S --noconfirm go
+	# Add Go environment setup to .zshrc
+	echo 'export GOPATH=$$HOME/go' >> $$HOME/.zshrc
+	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
+	@echo "Installing Go tools..."
+	go install github.com/vektra/mockery/v2@latest
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
+	go install github.com/google/wire/cmd/wire@latest
+
+install-tfenv:
+	@echo "Installing tfenv..."
+	rm -rf $$HOME/.tfenv
+	git clone https://github.com/tfutils/tfenv.git $$HOME/.tfenv
+	echo 'export PATH="$$HOME/.tfenv/bin:$$PATH"' >> $$HOME/.zshrc
+	$$HOME/.tfenv/bin/tfenv install v1.6.2
+	$$HOME/.tfenv/bin/tfenv use v1.6.2
+
+install-postgresql:
+	@echo "Installing PostgreSQL and pgvector..."
+	sudo pacman -S --noconfirm postgresql postgresql-libs
+	sudo rm -rf /var/lib/postgres/data # this will bite you
+	sudo -u postgres initdb --locale=C.UTF-8 --encoding=UTF8 -D '/var/lib/postgres/data'
+	rm -rf $$HOME/pgvector
+	git clone --branch v0.8.0 https://github.com/pgvector/pgvector.git $$HOME/pgvector
+	cd $$HOME/pgvector && make && sudo make install
+	rm -rf $$HOME/pgvector
+
+install-redis:
+	@echo "Installing Redis..."
+	sudo pacman -S --noconfirm redis
+	sudo systemctl enable --now redis
+
+install-protobuf:
+	@echo "Installing protobuf..."
+	sudo pacman -S --noconfirm protobuf
+
+install-gcloud:
+	@echo "Installing Google Cloud SDK..."
+	curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo pacman-key --add -
+	sudo pacman -S --noconfirm python python-pip
+	yay -S --noconfirm google-cloud-sdk
+
+install-rust:
+	@echo "Installing Rust..."
+	curl https://sh.rustup.rs -sSf | sh
+	sudo pacman -S --noconfirm python-virtualenv
+
+install-lazygit:
+	@echo "Installing Lazygit..."
+	LAZYGIT_VERSION=$$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": *"v\K[^"]*')
+	curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v$${LAZYGIT_VERSION}/lazygit_$${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+	tar xf lazygit.tar.gz lazygit
+	sudo install lazygit -D -t /usr/local/bin/
+
+cleanup:
+	@echo "Cleaning up..."
+	sudo pacman -Rns $$(pacman -Qdtq) --noconfirm || true
+
+copy-dotfiles:
+	@echo "Copying dotfiles..."
+	cp -rf $$HOME/projects/dotfiles/linux/nvim $$HOME/.config
+	cp $$HOME/projects/dotfiles/linux/.tmux.conf $$HOME/
+	cp $$HOME/projects/dotfiles/linux/.zshrc $$HOME/
+	cp $$HOME/projects/dotfiles/lazygit $$HOME/.config

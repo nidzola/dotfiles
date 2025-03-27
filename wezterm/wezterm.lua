@@ -146,7 +146,7 @@ end)
 config.keys = {
 	{ key = "-", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "/", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "o", mods = "ALT", action = wezterm.action.EmitEvent("switch-to-project") },
+	-- { key = "o", mods = "ALT", action = wezterm.action.EmitEvent("switch-to-project") },
 	{ key = "f", mods = "ALT", action = wezterm.action.ToggleFullScreen },
 	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
 	{ key = "x", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
@@ -156,7 +156,11 @@ config.keys = {
 -- Event handlers
 wezterm.on("format-tab-title", function(tab)
 	local cwd = string.match(tab.active_pane.current_working_dir.file_path, "/([^/]*)$")
-	return { { Text = " " .. cwd .. "  " } }
+	local host = tab.active_pane.current_working_dir.host or ""
+	if host == "osx.local" then
+		return { { Text = " " .. cwd .. "  " } }
+	end
+	return { { Text = host } }
 end)
 
 wezterm.on("update-right-status", function(window)
