@@ -81,6 +81,13 @@ setup-zshrc:
 	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
 	echo 'eval "$$(zoxide init zsh)"' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
+	echo 'export SSH_AUTH_SOCK="$$XDG_RUNTIME_DIR/ssh-agent.socket"' >> $$HOME/.zshrc
+	echo 'if ! pgrep -u "$$USER" ssh-agent > /dev/null; then' >> $$HOME/.zshrc
+	echo '    eval "$$(ssh-agent -a $$SSH_AUTH_SOCK)" > /dev/null' >> $$HOME/.zshrc
+	echo 'fi' >> $$HOME/.zshrc
+	echo 'ssh-add ~/.ssh/id_ed25519 &> /dev/null' >> $$HOME/.zshrc
+	echo 'ssh-add ~/.ssh/id_transcarent &> /dev/null' >> $$HOME/.zshrc
+	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
 	@echo "Don't forget to run 'source ~/.zshrc' to apply the changes."
 
 install-yay:
@@ -171,4 +178,3 @@ copy-dotfiles:
 	cp -rf $$HOME/projects/dotfiles/linux/nvim $$HOME/.config
 	cp $$HOME/projects/dotfiles/linux/.tmux.conf $$HOME/
 	cp -rf $$HOME/projects/dotfiles/lazygit $$HOME/.config
-	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
