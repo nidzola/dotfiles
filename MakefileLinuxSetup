@@ -2,12 +2,12 @@
 
 .PHONY: all enable-services update-system install-packages setup-git setup-zsh \
         install-tailscale install-node install-go install-tfenv install-postgresql \
-        install-redis install-protobuf install-gcloud install-rust install-lazygit \
+        install-redis install-protobuf install-gcloud install-rust \
         cleanup copy-dotfiles
 
 all: enable-services update-system install-packages setup-git setup-zsh \
      install-tailscale install-node install-go install-tfenv install-postgresql \
-     install-redis install-protobuf install-gcloud install-rust install-lazygit \
+     install-redis install-protobuf install-gcloud install-rust \
      cleanup copy-dotfiles
 	@echo "Setup complete! Reboot recommended."
 
@@ -24,7 +24,7 @@ update-system:
 
 install-packages:
 	@echo "Installing essential packages..."
-	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm
+	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm lazygit bat
 
 setup-git:
 	@echo "Setting up Git..."
@@ -152,20 +152,21 @@ install-rust:
 	curl https://sh.rustup.rs -sSf | sh
 	sudo pacman -S --noconfirm python-virtualenv
 
-install-lazygit:
-	@echo "Installing Lazygit..."
-	LAZYGIT_VERSION=$$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": *"v\K[^"]*')
-	curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v$${LAZYGIT_VERSION}/lazygit_$${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-	tar xf lazygit.tar.gz lazygit
-	sudo install lazygit -D -t /usr/local/bin/
-
 cleanup:
 	@echo "Cleaning up..."
-	sudo pacman -Rns $$(pacman -Qdtq) --noconfirm || true
+	@echo "Cleaning up..."
+	@if [ -n "$(pacman -Qdtq)" ]; then sudo pacman -Rns $(pacman -Qdtq) --noconfirm; else echo "No orphaned packages to remove."; fi
 
 copy-dotfiles:
+	rm -rf $$HOME/.tmux/plugins/tpm
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	@if [ ! -d "$$HOME/projects/dotfiles" ]; then \
+		echo "Cloning dotfiles repository..."; \
+		git clone https://github.com/nidzola/dotfiles.git $$HOME/projects/dotfiles; \
+	else \
+		echo "Dotfiles repository already exists."; \
+	fi
 	@echo "Copying dotfiles..."
 	cp -rf $$HOME/projects/dotfiles/linux/nvim $$HOME/.config
 	cp $$HOME/projects/dotfiles/linux/.tmux.conf $$HOME/
-	cp $$HOME/projects/dotfiles/linux/.zshrc $$HOME/
-	cp $$HOME/projects/dotfiles/lazygit $$HOME/.config
+	cp -rf $$HOME/projects/dotfiles/lazygit $$HOME/.config
