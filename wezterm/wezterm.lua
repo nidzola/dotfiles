@@ -160,9 +160,7 @@ config.keys = {
 				domain = "CurrentPaneDomain",
 				label = "SSH Workstation",
 			}),
-			-- wezterm.action.EmitEvent("rename-ssh-tab"),
 		}),
-		-- wezterm.action.EmitEvent("rename-ssh-tab"),
 	},
 }
 
@@ -183,17 +181,6 @@ end)
 wezterm.on("update-right-status", function(window)
 	window:set_right_status(wezterm.format({ { Text = "Workspace: " .. window:active_workspace() .. " " } }))
 end)
-
-config.launch_menu = {
-	{
-		label = "💻 Local Shell",
-		args = { "/bin/zsh" },
-	},
-	{
-		label = "🌍 SSH Workstation",
-		args = { "ssh", "nidzola@192.168.0.14" },
-	},
-}
 
 wezterm.on("gui-startup", function(cmd)
 	local _, _, window = wezterm.mux.spawn_window(cmd or {})
