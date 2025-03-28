@@ -20,6 +20,8 @@ enable-services:
 
 update-system:
 	@echo "Updating system..."
+	sudo sed -i 's/^#\?ParallelDownloads = .*/ParallelDownloads = 10/' /etc/pacman.conf
+	grep -q "^ParallelDownloads" /etc/pacman.conf || sudo sed -i '/^\[options\]/a ParallelDownloads = 10' /etc/pacman.conf
 	sudo pacman -Syu --noconfirm
 
 install-packages:
