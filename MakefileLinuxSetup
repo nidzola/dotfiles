@@ -183,7 +183,7 @@ update-ssh-config:
 	sudo systemctl restart sshd
 
 add-ssh-agent-service:
-	sudo grep -q "[Unit]" $(SERVICE_FILE) || sudo sed -i '/^$/a\
+	@sudo grep -q "[Unit]" $(SERVICE_FILE) || sudo sed -i '/^$/a\
 	[Unit]\
 	Description=SSH key agent\
 	After=network.target\
@@ -195,12 +195,16 @@ add-ssh-agent-service:
 	[Install]\
 	WantedBy=default.target\
 	' $(SERVICE_FILE)
-	systemctl --user enable --now ssh-agent
-	ssh-add ~/.ssh/id_ed25519
-	ssh-add ~/.ssh/id_transcarent
+	@systemctl --user enable --now ssh-agent
+	@systemctl --user restart ssh-agent
+	@echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
+	@grep -qxF 'if ! ssh-add -l &>/dev/null; then' $$HOME/.zshrc || echo 'if ! ssh-add -l &>/dev/null; then \
+    ssh-add ~/.ssh/id_ed25519 ~/.ssh/id_transcarent 2>/dev/null; \
+	fi' >> $$HOME/.zshrc
+	@ssh-add ~/.ssh/id_ed25519
+	@ssh-add ~/.ssh/id_transcarent
 
 cleanup:
-	@echo "Cleaning up..."
 	@echo "Cleaning up..."
 	@if [ -n "$(pacman -Qdtq)" ]; then sudo pacman -Rns $(pacman -Qdtq) --noconfirm; else echo "No orphaned packages to remove."; fi
 
