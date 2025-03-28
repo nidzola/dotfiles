@@ -146,26 +146,54 @@ end)
 config.keys = {
 	{ key = "-", mods = "ALT", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "/", mods = "ALT", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	-- { key = "o", mods = "ALT", action = wezterm.action.EmitEvent("switch-to-project") },
 	{ key = "f", mods = "ALT", action = wezterm.action.ToggleFullScreen },
 	{ key = "p", mods = "ALT", action = wezterm.action.PaneSelect({ alphabet = "1234567890" }) },
 	{ key = "x", mods = "ALT", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
 	{ key = "X", mods = "ALT", action = wezterm.action.CloseCurrentTab({ confirm = false }) },
 	{ key = "n", mods = "ALT", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
+	{
+		key = "L",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.Multiple({
+			wezterm.action.SpawnCommandInNewTab({
+				args = { "ssh", "nidzola@192.168.0.14" },
+				domain = "CurrentPaneDomain",
+				label = "SSH Workstation",
+			}),
+			-- wezterm.action.EmitEvent("rename-ssh-tab"),
+		}),
+		-- wezterm.action.EmitEvent("rename-ssh-tab"),
+	},
 }
+
 -- Event handlers
 wezterm.on("format-tab-title", function(tab)
 	local cwd = string.match(tab.active_pane.current_working_dir.file_path, "/([^/]*)$")
 	local host = tab.active_pane.current_working_dir.host or ""
 	if host == "osx.local" then
-		return { { Text = " " .. cwd .. "  " } }
+		return { { Text = " " .. cwd .. "  " } }
 	end
-	return { { Text = host } }
+	return { { Text = "󰇅 SSH Workstation " } }
+end)
+
+wezterm.on("rename-ssh-tab", function(window, pane)
+	window:active_tab():set_title("SSH Workstation")
 end)
 
 wezterm.on("update-right-status", function(window)
 	window:set_right_status(wezterm.format({ { Text = "Workspace: " .. window:active_workspace() .. " " } }))
 end)
+
+config.launch_menu = {
+	{
+		label = "💻 Local Shell",
+		args = { "/bin/zsh" },
+	},
+	{
+		label = "🌍 SSH Workstation",
+		args = { "ssh", "nidzola@192.168.0.14" },
+	},
+}
 
 wezterm.on("gui-startup", function(cmd)
 	local _, _, window = wezterm.mux.spawn_window(cmd or {})
