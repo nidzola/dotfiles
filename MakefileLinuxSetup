@@ -1,14 +1,15 @@
 # Makefile
+SERVICE_FILE = ~/.config/systemd/user/ssh-agent.service
 
 .PHONY: all enable-services update-system install-packages setup-git setup-zsh \
         install-tailscale install-node install-go install-tfenv install-postgresql \
         install-redis install-protobuf install-gcloud install-rust \
-        cleanup copy-dotfiles
+        cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
 
 all: enable-services update-system install-packages setup-git setup-zsh \
      install-tailscale install-node install-go install-tfenv install-postgresql \
      install-redis install-protobuf install-gcloud install-rust \
-     cleanup copy-dotfiles
+     cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
 	@echo "Setup complete! Reboot recommended."
 
 enable-services:
@@ -83,9 +84,6 @@ setup-zshrc:
 	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
 	echo 'eval "$$(zoxide init zsh)"' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
-	echo 'eval "$$(ssh-agent -s)"' >> $$HOME/.zshrc
-	echo 'ssh-add ~/.ssh/id_ed25519 &> /dev/null' >> $$HOME/.zshrc
-	echo 'ssh-add ~/.ssh/id_transcarent &> /dev/null' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
 	@echo "Don't forget to run 'source ~/.zshrc' to apply the changes."
 
@@ -159,10 +157,10 @@ install-rust:
 	curl https://sh.rustup.rs -sSf | sh
 	sudo pacman -S --noconfirm python-virtualenv
 
-cleanup:
-	@echo "Cleaning up..."
-	@echo "Cleaning up..."
-	@if [ -n "$(pacman -Qdtq)" ]; then sudo pacman -Rns $(pacman -Qdtq) --noconfirm; else echo "No orphaned packages to remove."; fi
+cpu-tweaks:
+	sudo pacman -S cpupower --noconfirm
+	sudo systemctl enable --now cpupower.service
+	sudo cpupower frequency-set -g schedutil
 
 copy-dotfiles:
 	rm -rf $$HOME/.tmux/plugins/tpm
@@ -177,3 +175,32 @@ copy-dotfiles:
 	cp -rf $$HOME/projects/dotfiles/linux/nvim $$HOME/.config
 	cp $$HOME/projects/dotfiles/linux/.tmux.conf $$HOME/
 	cp -rf $$HOME/projects/dotfiles/lazygit $$HOME/.config
+
+update-ssh-config:
+	sudo sed -i 's/^#\?TCPKeepAlive.*/TCPKeepAlive yes/' /etc/ssh/sshd_config
+	sudo sed -i 's/^#\?ClientAliveInterval.*/ClientAliveInterval 60/' /etc/ssh/sshd_config
+	sudo sed -i 's/^#\?ClientAliveCountMax.*/ClientAliveCountMax 10/' /etc/ssh/sshd_config
+	sudo systemctl restart sshd
+
+add-ssh-agent-service:
+	sudo grep -q "[Unit]" $(SERVICE_FILE) || sudo sed -i '/^$/a\
+	[Unit]\
+	Description=SSH key agent\
+	After=network.target\
+	\
+	[Service]\
+	ExecStart=/usr/bin/ssh-agent -D\
+	Restart=always\
+	\
+	[Install]\
+	WantedBy=default.target\
+	' $(SERVICE_FILE)
+	systemctl --user enable --now ssh-agent
+	ssh-add ~/.ssh/id_ed25519
+	ssh-add ~/.ssh/id_transcarent
+
+cleanup:
+	@echo "Cleaning up..."
+	@echo "Cleaning up..."
+	@if [ -n "$(pacman -Qdtq)" ]; then sudo pacman -Rns $(pacman -Qdtq) --noconfirm; else echo "No orphaned packages to remove."; fi
+
