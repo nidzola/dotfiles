@@ -156,7 +156,7 @@ config.keys = {
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.Multiple({
 			wezterm.action.SpawnCommandInNewTab({
-				args = { "ssh", "nidzola@192.168.0.14" },
+				args = { "ssh", "nidzola@192.168.50.198" },
 				domain = "CurrentPaneDomain",
 				label = "SSH Workstation",
 			}),
