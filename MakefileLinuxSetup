@@ -1,12 +1,12 @@
 # Makefile
 SERVICE_FILE = ~/.config/systemd/user/ssh-agent.service
 
-.PHONY: all enable-services update-system install-packages setup-git setup-zsh \
+.PHONY: all enable-services update-system install-packages setup-git setup-zsh install-yay install-yay-packages \
         install-tailscale install-node install-go install-tfenv install-postgresql \
         install-redis install-protobuf install-gcloud install-rust \
         cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
 
-all: enable-services update-system install-packages setup-git setup-zsh \
+all: enable-services update-system install-packages setup-git setup-zsh install-yay install-yay-packages \
      install-tailscale install-node install-go install-tfenv install-postgresql \
      install-redis install-protobuf install-gcloud install-rust \
      cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
@@ -99,6 +99,10 @@ install-yay:
 		echo "yay is already installed!"; \
 	fi
 
+install-yay-packages:
+	@echo "Installing yay packages..."
+	yay -S --noconfirm mockery
+
 install-tailscale:
 	@echo "Installing Tailscale..."
 	curl -fsSL https://tailscale.com/install.sh | sh
@@ -118,6 +122,7 @@ install-go:
 	go install github.com/vektra/mockery/v2@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
 	go install github.com/google/wire/cmd/wire@latest
+	go install gotest.tools/gotestsum@latest
 
 install-tfenv:
 	@echo "Installing tfenv..."
@@ -136,6 +141,8 @@ install-postgresql:
 	git clone --branch v0.8.0 https://github.com/pgvector/pgvector.git $$HOME/pgvector
 	cd $$HOME/pgvector && make && sudo make install
 	rm -rf $$HOME/pgvector
+	sudo -u postgres psql -c "CREATE ROLE nidzola WITH SUPERUSER CREATEDB CREATEROLE LOGIN;"
+	sudo systemctl restart postgresql
 
 install-redis:
 	@echo "Installing Redis..."
