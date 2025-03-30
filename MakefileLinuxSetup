@@ -86,7 +86,7 @@ setup-zshrc:
 	echo 'eval "$$(zoxide init zsh)"' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
-	echo 'export PROMPT="%F{green}%m%f@%F{blue}%~%f $(git_prompt_info)"' >> $$HOME/.zshrc
+	echo 'export PROMPT="%F{green}%m%f%F{yellow}@%f%F{blue}%~%f $(git_prompt_info)"' >> $$HOME/.zshrc
 	echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
 	grep -qxF 'if ! ssh-add -l &>/dev/null; then' $$HOME/.zshrc || echo 'if ! ssh-add -l &>/dev/null; then \
    ssh-add ~/.ssh/id_ed25519 ~/.ssh/id_transcarent 2>/dev/null; \
