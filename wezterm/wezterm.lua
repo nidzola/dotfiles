@@ -156,9 +156,9 @@ config.keys = {
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.Multiple({
 			wezterm.action.SpawnCommandInNewTab({
-				args = { "ssh", "nidzola@192.168.50.198" },
+				args = { "ssh", "nidzola@workstation" }, -- static IP for workstation is (in local network): 192.168.50.202
 				domain = "CurrentPaneDomain",
-				label = "SSH Workstation",
+				label = "Workstation",
 			}),
 		}),
 	},
@@ -168,14 +168,10 @@ config.keys = {
 wezterm.on("format-tab-title", function(tab)
 	local cwd = string.match(tab.active_pane.current_working_dir.file_path, "/([^/]*)$")
 	local host = tab.active_pane.current_working_dir.host or ""
-	if host == "osx.local" then
+	if host == "macbook" then
 		return { { Text = " " .. cwd .. "  " } }
 	end
-	return { { Text = "󰇅 SSH Workstation " } }
-end)
-
-wezterm.on("rename-ssh-tab", function(window, pane)
-	window:active_tab():set_title("SSH Workstation")
+	return { { Text = " 󰇅  Workstation " } }
 end)
 
 wezterm.on("update-right-status", function(window)
