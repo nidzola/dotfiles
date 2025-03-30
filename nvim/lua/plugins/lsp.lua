@@ -43,6 +43,9 @@ return {
           },
         }
       end,
+      postgres_lsp = function(_, opts)
+        opts.filetypes = { "sql" }
+      end,
     },
   },
 }

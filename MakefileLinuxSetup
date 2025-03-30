@@ -47,7 +47,7 @@ setup-zsh:
 setup-zshrc:
 	@echo "Setting up Zsh configuration..."
 	# Add custom Zsh configuration
-	rm -f $$HOME/.zshrc
+	rm $$HOME/.zshrc
 	echo 'export ZSH="$$HOME/.oh-my-zsh"' >> $$HOME/.zshrc
 	echo 'ZSH_THEME="robbyrussell"' >> $$HOME/.zshrc
 	echo 'CASE_SENSITIVE="true"' >> $$HOME/.zshrc
@@ -81,11 +81,16 @@ setup-zshrc:
 	echo 'alias cat="bat"' >> $$HOME/.zshrc
 	echo 'alias z="zi"' >> $$HOME/.zshrc
 	echo 'export XDG_CONFIG_HOME="$$HOME/.config"' >> $$HOME/.zshrc
-	@echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
+	echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
 	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
 	echo 'eval "$$(zoxide init zsh)"' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
+	echo 'export PROMPT="%F{green}%m%f@%F{blue}%~%f $(git_prompt_info)"' >> $$HOME/.zshrc
+	echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
+	grep -qxF 'if ! ssh-add -l &>/dev/null; then' $$HOME/.zshrc || echo 'if ! ssh-add -l &>/dev/null; then \
+   ssh-add ~/.ssh/id_ed25519 ~/.ssh/id_transcarent 2>/dev/null; \
+	fi' >> $$HOME/.zshrc
 	@echo "Don't forget to run 'source ~/.zshrc' to apply the changes."
 
 install-yay:
@@ -205,10 +210,6 @@ add-ssh-agent-service:
 	' $(SERVICE_FILE)
 	@systemctl --user enable --now ssh-agent
 	@systemctl --user restart ssh-agent
-	@echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
-	@grep -qxF 'if ! ssh-add -l &>/dev/null; then' $$HOME/.zshrc || echo 'if ! ssh-add -l &>/dev/null; then \
-    ssh-add ~/.ssh/id_ed25519 ~/.ssh/id_transcarent 2>/dev/null; \
-	fi' >> $$HOME/.zshrc
 	@ssh-add ~/.ssh/id_ed25519
 	@ssh-add ~/.ssh/id_transcarent
 
