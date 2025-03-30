@@ -1,23 +1,16 @@
 # Makefile
 SERVICE_FILE = ~/.config/systemd/user/ssh-agent.service
 
-.PHONY: all enable-services update-system install-packages setup-git setup-zsh install-yay install-yay-packages \
+.PHONY: all update-system install-packages enable-services setup-git setup-zsh install-yay install-yay-packages \
         install-tailscale install-node install-go install-tfenv install-postgresql \
         install-redis install-protobuf install-gcloud install-rust \
         cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
 
-all: enable-services update-system install-packages setup-git setup-zsh install-yay install-yay-packages \
+all: update-system install-packages enable-services setup-git setup-zsh install-yay install-yay-packages \
      install-tailscale install-node install-go install-tfenv install-postgresql \
      install-redis install-protobuf install-gcloud install-rust \
      cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
 	@echo "Setup complete! Reboot recommended."
-
-enable-services:
-	@echo "Enabling services..."
-	sudo systemctl enable --now bluetooth
-	sudo systemctl enable --now sshd
-	# disable sleep and hibernate
-	sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 update-system:
 	@echo "Updating system..."
@@ -27,7 +20,15 @@ update-system:
 
 install-packages:
 	@echo "Installing essential packages..."
-	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm lazygit bat terraform btop
+	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm lazygit bat terraform btop networkmanager
+
+enable-services:
+	@echo "Enabling services..."
+	sudo systemctl enable --now bluetooth
+	sudo systemctl enable --now sshd
+	sudo systemctl enable --now NetworkManager
+	# disable sleep and hibernate
+	sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 setup-git:
 	@echo "Setting up Git..."
