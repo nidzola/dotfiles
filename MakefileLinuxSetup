@@ -145,6 +145,10 @@ install-postgresql:
 	rm -rf $$HOME/pgvector
 	sudo -u postgres psql -c "CREATE ROLE nidzola WITH SUPERUSER CREATEDB CREATEROLE LOGIN;"
 	sudo systemctl restart postgresql
+	@echo "set listen_addresses = '*' in /var/lib/postgres/data/postgresql.conf"  # automate
+	@echo "set for local and tailscale /var/lib/postgres/data/pg_hba.con"
+	#host    all             all             192.168.50.0/24         trust
+	#host    all             all             100.64.0.0/10           trust
 
 install-redis:
 	@echo "Installing Redis..."
@@ -216,12 +220,19 @@ setup-firewall:
 	sudo ufw allow from 192.168.50.0/24 to any port 22
 	# Allow traffic from Tailscale network for SSH (port 22)
 	sudo ufw allow from 100.64.0.0/10 to any port 22
+	# Allow traffic from local network range for psql (port 5432)
+	sudo ufw allow from 192.168.50.0/24 to any port 5432
+	# Allow traffic from Tailscale network for psql (port 5432)
+	sudo ufw allow from 100.64.0.0/10 to any port 5432
 	# Allow traffic from local network range for other services
 	sudo ufw allow from 192.168.50.0/24
 	# Allow traffic from Tailscale network for other services
 	sudo ufw allow from 100.64.0.0/10
 	# Block all other incoming traffic by default
 	sudo ufw default deny incoming
+	sudo ufw enable
+	sudo systemctl enable ufw
+
 
 cleanup:
 	@echo "Cleaning up..."
