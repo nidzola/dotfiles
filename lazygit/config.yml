@@ -52,3 +52,6 @@ customCommands:
       - type: "confirm"
         title: "Is the commit message correct?"
         body: "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}"
+  - key: "O"
+    command: ~/projects/bin/osx_open_pr
+    context: localBranches
