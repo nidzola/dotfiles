@@ -4,12 +4,12 @@ SERVICE_FILE = ~/.config/systemd/user/ssh-agent.service
 .PHONY: all update-system install-packages enable-services setup-git setup-zsh install-yay install-yay-packages \
         install-tailscale install-node install-go install-tfenv install-postgresql \
         install-redis install-protobuf install-gcloud install-rust \
-        cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service setup-firewall cleanup 
+        cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service setup-firewall cleanup
 
 all: update-system install-packages enable-services setup-git setup-zsh install-yay install-yay-packages \
      install-tailscale install-node install-go install-tfenv install-postgresql \
      install-redis install-protobuf install-gcloud install-rust \
-     cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service setup-firewall cleanup 
+     cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service setup-firewall cleanup
 	@echo "Setup complete! Reboot recommended."
 
 update-system:
