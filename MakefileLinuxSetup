@@ -4,12 +4,12 @@ SERVICE_FILE = ~/.config/systemd/user/ssh-agent.service
 .PHONY: all update-system install-packages enable-services setup-git setup-zsh install-yay install-yay-packages \
         install-tailscale install-node install-go install-tfenv install-postgresql \
         install-redis install-protobuf install-gcloud install-rust \
-        cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
+        cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service setup-firewall cleanup 
 
 all: update-system install-packages enable-services setup-git setup-zsh install-yay install-yay-packages \
      install-tailscale install-node install-go install-tfenv install-postgresql \
      install-redis install-protobuf install-gcloud install-rust \
-     cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service cleanup 
+     cpu-tweaks copy-dotfiles update_ssh_config add-ssh-agent-service setup-firewall cleanup 
 	@echo "Setup complete! Reboot recommended."
 
 update-system:
@@ -41,8 +41,6 @@ setup-zsh:
 	@if [ ! -d "$$HOME/.oh-my-zsh" ]; then \
 		sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"; \
 	fi
-	# in order to execute this below it needs to be rerun where in zsh 
-	@echo "Setting up Zsh plugins..."
 
 setup-zshrc:
 	@echo "Setting up Zsh configuration..."
@@ -84,7 +82,8 @@ setup-zshrc:
 	echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
 	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
 	echo 'eval "$$(zoxide init zsh)"' >> $$HOME/.zshrc
-	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
+	echo 'export GOPATH=$$HOME/go' >> $$HOME/.zshrc
+	echo 'export PATH=$$GOPATH/bin' >> $$HOME/.zshrc
 	echo 'export PATH=$$PATH:$$HOME/projects/bin' >> $$HOME/.zshrc
 	echo 'export PROMPT="%F{green}%m%f%F{yellow}@%f%F{blue}%~%f $(git_prompt_info)"' >> $$HOME/.zshrc
 	echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
@@ -121,9 +120,6 @@ install-node:
 install-go:
 	@echo "Installing Go..."
 	sudo pacman -S --noconfirm go
-	# Add Go environment setup to .zshrc
-	echo 'export GOPATH=$$HOME/go' >> $$HOME/.zshrc
-	echo 'export PATH=$$PATH:$$GOROOT/bin:$$GOPATH/bin' >> $$HOME/.zshrc
 	@echo "Installing Go tools..."
 	go install github.com/vektra/mockery/v2@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
@@ -212,6 +208,20 @@ add-ssh-agent-service:
 	@systemctl --user restart ssh-agent
 	@ssh-add ~/.ssh/id_ed25519
 	@ssh-add ~/.ssh/id_transcarent
+
+setup-firewall:
+	@echo "Setting up firewall..."
+	sudo pacman -S --noconfirm ufw
+	# Allow traffic from local network range for SSH (port 22)
+	sudo ufw allow from 192.168.50.0/24 to any port 22
+	# Allow traffic from Tailscale network for SSH (port 22)
+	sudo ufw allow from 100.64.0.0/10 to any port 22
+	# Allow traffic from local network range for other services
+	sudo ufw allow from 192.168.50.0/24
+	# Allow traffic from Tailscale network for other services
+	sudo ufw allow from 100.64.0.0/10
+	# Block all other incoming traffic by default
+	sudo ufw default deny incoming
 
 cleanup:
 	@echo "Cleaning up..."
