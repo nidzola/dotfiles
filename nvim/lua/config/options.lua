@@ -42,6 +42,7 @@ opt.showbreak = "↪ "
 -- Leader key setting
 g.maplocalleader = " "
 g.root_spec = { "cwd" }
+g.snacks_animate = false
 
 o.swapfile = false
 
