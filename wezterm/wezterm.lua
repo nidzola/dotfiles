@@ -168,7 +168,7 @@ config.keys = {
 wezterm.on("format-tab-title", function(tab)
 	local cwd = string.match(tab.active_pane.current_working_dir.file_path, "/([^/]*)$")
 	local host = tab.active_pane.current_working_dir.host or ""
-	if host == "macbook" then
+	if host == "osx.local" then
 		return { { Text = " " .. cwd .. "  " } }
 	end
 	return { { Text = " 󰇅  Workstation " } }
