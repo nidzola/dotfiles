@@ -20,7 +20,7 @@ update-system:
 
 install-packages:
 	@echo "Installing essential packages..."
-	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm lazygit bat terraform btop networkmanager nmap ufw yarn
+	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn
 
 enable-services:
 	@echo "Enabling services..."
@@ -76,7 +76,6 @@ setup-zshrc:
 	echo 'alias ll="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
 	echo 'alias ls="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
 	echo 'alias l="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
-	echo 'alias cat="bat"' >> $$HOME/.zshrc
 	echo 'alias z="zi"' >> $$HOME/.zshrc
 	echo 'export XDG_CONFIG_HOME="$$HOME/.config"' >> $$HOME/.zshrc
 	echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
@@ -197,6 +196,19 @@ update-ssh-config:
 	sudo sed -i 's/^#\?ClientAliveInterval.*/ClientAliveInterval 60/' /etc/ssh/sshd_config
 	sudo sed -i 's/^#\?ClientAliveCountMax.*/ClientAliveCountMax 10/' /etc/ssh/sshd_config
 	sudo systemctl restart sshd
+	# Add the following to ~/.ssh/config on the client machine
+	#   Host *
+	#   ServerAliveInterval 60
+	#   ServerAliveCountMax 3
+	#   TCPKeepAlive yes
+	#
+	#   Host workstation
+	#   HostName workstation
+	#   User nidzola
+	#   LocalForward 3000 localhost:3000
+	#   LocalForward 8080 localhost:8080
+	#   LocalForward 4000 localhost:4000
+
 
 add-ssh-agent-service:
 	@sudo grep -q "[Unit]" $(SERVICE_FILE) || sudo sed -i '/^$/a\
