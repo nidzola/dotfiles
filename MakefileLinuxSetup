@@ -108,7 +108,7 @@ install-yay:
 
 install-yay-packages:
 	@echo "Installing yay packages..."
-	yay -S --noconfirm mockery
+	yay -S --noconfirm mockery downgrade
 
 install-tailscale:
 	@echo "Installing Tailscale..."
