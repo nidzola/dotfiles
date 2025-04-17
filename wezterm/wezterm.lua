@@ -21,6 +21,9 @@ config.hide_tab_bar_if_only_one_tab = false
 -- Color and rendering settings
 config.color_scheme = "Everforest Dark (Gogh)"
 
+-- Speed up rendering
+config.max_fps = 120
+
 -- Colors
 config.colors = {
 	tab_bar = {
