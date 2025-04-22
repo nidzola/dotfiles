@@ -77,6 +77,7 @@ setup-zshrc:
 	echo 'alias ls="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
 	echo 'alias l="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
 	echo 'alias z="zi"' >> $$HOME/.zshrc
+	echo 'bindkey -v' >> $$HOME/.zshrc
 	echo 'export XDG_CONFIG_HOME="$$HOME/.config"' >> $$HOME/.zshrc
 	echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
 	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
