@@ -17,7 +17,7 @@ return {
         open = function(url)
           if vim.env.SSH_CONNECTION or vim.env.SSH_CLIENT or vim.env.SSH_TTY then
             local updated_url = url:gsub("^(https://github%.com)-transcarent", "%1")
-            os.execute('ssh -t nikola@macbook "open -a \\"Google Chrome\\" \\"' .. updated_url .. '\\""')
+            os.execute('ssh -t nikola@macbook "open \\"' .. updated_url .. '\\""')
             return
           end
           vim.ui.open(url)
