@@ -77,6 +77,7 @@ setup-zshrc:
 	echo 'alias ls="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
 	echo 'alias l="eza --long --color=always --icons=always"' >> $$HOME/.zshrc
 	echo 'alias z="zi"' >> $$HOME/.zshrc
+	echo 'bindkey -v' >> $$HOME/.zshrc
 	echo 'export XDG_CONFIG_HOME="$$HOME/.config"' >> $$HOME/.zshrc
 	echo "GOOGLE_APPLICATION_CREDENTIALS needs to be set to the path of your GCP credentials file"
 	echo 'export GOOGLE_APPLICATION_CREDENTIALS="$$HOME/.gcp/dev-gcp.json"' >> $$HOME/.zshrc
@@ -108,7 +109,7 @@ install-yay:
 
 install-yay-packages:
 	@echo "Installing yay packages..."
-	yay -S --noconfirm mockery
+	yay -S --noconfirm mockery downgrade
 
 install-tailscale:
 	@echo "Installing Tailscale..."
@@ -196,18 +197,7 @@ update-ssh-config:
 	sudo sed -i 's/^#\?ClientAliveInterval.*/ClientAliveInterval 60/' /etc/ssh/sshd_config
 	sudo sed -i 's/^#\?ClientAliveCountMax.*/ClientAliveCountMax 10/' /etc/ssh/sshd_config
 	sudo systemctl restart sshd
-	# Add the following to ~/.ssh/config on the client machine
-	#   Host *
-	#   ServerAliveInterval 60
-	#   ServerAliveCountMax 3
-	#   TCPKeepAlive yes
-	#
-	#   Host workstation
-	#   HostName workstation
-	#   User nidzola
-	#   LocalForward 3000 localhost:3000
-	#   LocalForward 8080 localhost:8080
-	#   LocalForward 4000 localhost:4000
+	## take a look what is needed on client ./ssh-config file in dotfiles
 
 
 add-ssh-agent-service:
