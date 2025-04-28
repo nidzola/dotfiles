@@ -20,7 +20,7 @@ update-system:
 
 install-packages:
 	@echo "Installing essential packages..."
-	sudo pacman -S --noconfirm git curl wget zsh neovim tmux base-devel htop fzf ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd ripgrep fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn
+	sudo pacman -S --noconfirm --needed git curl wget zsh neovim tmux base-devel htop ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn
 
 enable-services:
 	@echo "Enabling services..."
@@ -164,7 +164,6 @@ install-protobuf:
 
 install-gcloud:
 	@echo "Installing Google Cloud SDK..."
-	curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo pacman-key --add -
 	sudo pacman -S --noconfirm python python-pip
 	yay -S --noconfirm google-cloud-sdk
 

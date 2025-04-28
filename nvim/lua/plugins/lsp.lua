@@ -32,7 +32,6 @@ return {
         end
       end,
       gopls = function(_, opts)
-        -- opts.cmd = { "/usr/bin/ssh", "nidzola@100.103.29.125", "/home/nidzola/go/bin/gopls" }
         opts.settings = {
           gopls = {
             hints = opts.settings.gopls.hints,
@@ -45,7 +44,7 @@ return {
             },
             deepCompletion = true,
             staticcheck = true,
-            buildFlags = { "-tags=test" },
+            buildFlags = { "-tags=test,wireinject,tools,integration" },
           },
         }
       end,
