@@ -3,6 +3,12 @@ return {
   opts = {
     -- kill inlay hints
     inlay_hints = { enabled = false },
+    servers = {
+      vtsls = {},
+      graphql = {},
+      gopls = {},
+      postgres_lsp = {}, -- <== Add this line
+    },
     setup = {
       vtsls = function(_, opts)
         -- opts.cmd = { "ssh", "nidzola@100.103.29.125", "node_modules/.bin/vtsls", "--stdio" }
@@ -45,6 +51,7 @@ return {
       end,
       postgres_lsp = function(_, opts)
         opts.filetypes = { "sql" }
+        opts.root_dir = require("lspconfig.util").root_pattern("postgrestools.jsonc", ".git")
       end,
     },
   },
