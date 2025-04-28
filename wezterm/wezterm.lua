@@ -4,6 +4,7 @@ local workspace_history = {}
 
 -- Font and window settings
 config.font = wezterm.font("JetBrains Mono")
+-- config.font = wezterm.font("Fira Code")
 config.font_size = 14
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.window_decorations = "RESIZE"
@@ -33,6 +34,8 @@ config.colors = {
 		},
 	},
 }
+
+config.max_fps = 120
 
 -- config.color_scheme = "Everforest Dark Hard (Gogh)"
 config.front_end = "WebGpu"
