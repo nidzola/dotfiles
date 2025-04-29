@@ -88,6 +88,7 @@ setup-zshrc:
 	echo 'autoload -Uz vcs_info' >> $$HOME/.zshrc
 	echo 'precmd() { vcs_info }' >> $$HOME/.zshrc
 	echo 'zstyle ":vcs_info:git:*" formats " (%b)"' >> $$HOME/.zshrc
+	echo 'export GOPRIVATE=github.com/transcarent/*' >> $$HOME/.zshrc
 	echo 'export PROMPT="%F{green}%m%f%F{yellow}@%f%F{blue}%~%f%F{magenta}\$${vcs_info_msg_0_}%f "' >> $$HOME/.zshrc
 	echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
 	grep -qxF 'if ! ssh-add -l &>/dev/null; then' $$HOME/.zshrc || echo 'if ! ssh-add -l &>/dev/null; then \
