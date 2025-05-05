@@ -5,7 +5,7 @@ local workspace_history = {}
 -- Font and window settings
 config.font = wezterm.font("JetBrains Mono")
 -- config.font = wezterm.font("Fira Code")
-config.font_size = 14
+config.font_size = 15
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.window_decorations = "RESIZE"
 -- disabling ligatures
