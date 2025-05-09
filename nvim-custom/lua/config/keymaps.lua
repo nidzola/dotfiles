@@ -34,3 +34,36 @@ end, { noremap = true, desc = "Copy relative path to clipboard" })
 map("n", "ge", function()
 	vim.diagnostic.goto_next()
 end, { desc = "Next Diagnostic" })
+
+map("n", "ca", function()
+	vim.lsp.buf.code_action()
+end, { desc = "Code action" })
+
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
+
+map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+map("n", "<leader>bd", function()
+	Snacks.bufdelete()
+end, { desc = "Delete Buffer" })
+
+-- new file
+map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
+
+-- tabs
+map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
+map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
+map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+-- hlsearch
+map("n", "<Esc>", function()
+	if vim.v.hlsearch == 1 then
+		vim.cmd("nohlsearch")
+	else
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+	end
+end, { noremap = true, silent = true })

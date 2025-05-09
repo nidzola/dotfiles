@@ -44,7 +44,7 @@ g.root_spec = { "cwd" }
 g.snacks_animate = false
 
 o.swapfile = false
-o.laststatus = 2
+o.laststatus = 3
 o.ruler = false
 o.showcmd = false
 o.cmdheight = 0

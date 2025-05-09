@@ -6,6 +6,7 @@ return {
 		local options = {
 			bigfile = { enabled = true },
 			dashboard = { enabled = true },
+			statuscolumn = { enabled = true },
 			indent = {
 				enabled = true,
 				animate = {
