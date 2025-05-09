@@ -20,7 +20,7 @@ update-system:
 
 install-packages:
 	@echo "Installing essential packages..."
-	sudo pacman -S --noconfirm --needed git curl wget zsh neovim tmux base-devel htop ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn ncdu
+	sudo pacman -S --noconfirm --needed git curl wget zsh neovim tmux base-devel htop ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn ncdu luarocks
 
 enable-services:
 	@echo "Enabling services..."

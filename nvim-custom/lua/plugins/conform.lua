@@ -1,32 +1,29 @@
 return {
 	"stevearc/conform.nvim",
-	command = function()
+	event = { "BufReadPre", "BufNewFile" },
+	config = function()
 		require("conform").setup({
 			format_on_save = {
 				lsp_fallback = true,
+				async = false,
 				timeout_ms = 3000,
+			},
+			formatters = {
+				sqlfluff = {
+					command = "sqlfluff",
+					require_cwd = false,
+				},
+			},
+			formatters_by_ft = {
+				go = { "goimports", "gofmt" },
+				sql = { "sqlfluff" },
+				lua = { "stylua" },
+				graphql = { "prettierd" },
+				javascript = { "prettierd" },
+				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
+				javascriptreact = { "prettierd" },
 			},
 		})
 	end,
-	opts = {
-		default_format_opts = {
-			lsp_fallback = true,
-			timeout_ms = 3000,
-		},
-		formatters = {
-			sqlfluff = {
-				command = "sqlfluff",
-				require_cwd = false,
-			},
-		},
-		formatters_by_ft = {
-			go = { "goimports", "gofmt" },
-			sql = { "sqlfluff" },
-			lua = { "stylua" },
-			javascript = { "prettierd", "prettier", stop_after_first = true },
-			typescript = { "prettierd", "prettier", stop_after_first = true },
-			typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-			javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-		},
-	},
 }

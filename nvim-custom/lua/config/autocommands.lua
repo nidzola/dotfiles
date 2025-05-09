@@ -34,52 +34,9 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- vim.api.nvim_create_autocmd("LspAttach", {
---   callback = function(args)
---     local client = vim.lsp.get_client_by_id(args.data.client_id)
---     if client == nil then
---       return
---     end
---
---     -- Disable word highlighting under the cursor
---     if client.server_capabilities.documentHighlightProvider then
---       client.server_capabilities.documentHighlightProvider = false
---     end
---     if client.supports_method("textDocument/publishDiagnostics") then
---       -- In summary, this code configures Neovim to show diagnostic messages from the language server with underlines and signs, but not inline text or popups, and not while you're typing.
---       client.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
---         virtual_lines = false,
---         virtual_text = false,
---         underline = true,
---         signs = true,
---         update_in_insert = false,
---       })
---     end
---   end,
--- })
-
 vim.api.nvim_create_autocmd("User", {
 	pattern = "MiniFilesActionRename",
 	callback = function(event)
 		Snacks.rename.on_rename_file(event.data.from, event.data.to)
-	end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
-})
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = augroup("organise_imports"),
-	pattern = { "*.ts", "*.tsx", "*.js", "*.jsx" },
-	callback = function()
-		vim.lsp.buf.code_action({
-			apply = true,
-			context = { only = { "source.addMissingImports.ts" }, diagnostics = {} },
-		})
-		vim.lsp.buf.code_action({ apply = true, context = { only = { "source.removeUnused.ts" }, diagnostics = {} } })
 	end,
 })
