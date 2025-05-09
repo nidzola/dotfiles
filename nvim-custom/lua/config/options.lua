@@ -1,6 +1,5 @@
 local opt = vim.opt
 local g = vim.g
-local filetype = vim.filetype
 local o = vim.o
 
 opt.number = true
@@ -45,6 +44,10 @@ g.root_spec = { "cwd" }
 g.snacks_animate = false
 
 o.swapfile = false
+o.laststatus = 2
+o.ruler = false
+o.showcmd = false
+o.cmdheight = 0
 
 -- normal JSON
 opt.conceallevel = 0

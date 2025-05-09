@@ -42,17 +42,10 @@ return {
 			},
 		},
 
-		-- keymap = {
-		--   ["<Tab>"] = {
-		--     LazyVim.cmp.map({ "ai_accept" }),
-		--     "fallback",
-		--   },
-		-- },
-
-    keymap = {
-      ["<CR>"] = { "select_and_accept", "fallback" },
-      preset = "super-tab",
-    },
+		keymap = {
+			preset = "default",
+			["<CR>"] = { "select_and_accept", "fallback" },
+		},
 		sources = {
 			default = { "lsp", "path", "buffer" },
 			-- disable snippets
