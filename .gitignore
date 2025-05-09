@@ -17,6 +17,8 @@
 !wezterm/**/*
 !nvim/
 !nvim/**/*
+!nvim-custom/
+!nvim-custom/**/*
 !alacritty/
 !alacritty/**/*
 !kitty/
