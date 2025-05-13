@@ -64,7 +64,18 @@ M.macro_recording = function()
   return ""
 end
 
+local cherry_pick_cache = {
+  value = "",
+  last_checked = nil,
+}
+
 M.is_cherry_pick_week = function()
+  local today_str = os.date("%Y-%m-%d")
+
+  if cherry_pick_cache.last_checked == today_str then
+    return cherry_pick_cache.value
+  end
+
   local os_date = os.date("*t")
   local today = os.time({ year = os_date.year, month = os_date.month, day = os_date.day })
 
@@ -77,14 +88,18 @@ M.is_cherry_pick_week = function()
     local cherry_pick_end = cherry_pick_start + 5 * 24 * 60 * 60 -- Friday to Wednesday (5 days)
 
     if today >= cherry_pick_start and today <= cherry_pick_end then
-      return " Cherry pick week 🍒 "
+      cherry_pick_cache.value = " Cherry pick week 🍒 "
+      cherry_pick_cache.last_checked = today_str
+      return cherry_pick_cache.value
     end
 
     -- Move to next 2-week sprint
     last_cut = last_cut + 14 * 24 * 60 * 60
   end
 
-  return ""
+  cherry_pick_cache.value = ""
+  cherry_pick_cache.last_checked = today_str
+  return cherry_pick_cache.value
 end
 
 M.get_statusline = function()
