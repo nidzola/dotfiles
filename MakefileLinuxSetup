@@ -91,8 +91,6 @@ setup-zshrc:
 	echo 'export GOPRIVATE=github.com/transcarent/*' >> $$HOME/.zshrc
 	echo 'export PROMPT="%F{green}%m%f%F{yellow}@%f%F{blue}%~%f%F{magenta}\$${vcs_info_msg_0_}%f "' >> $$HOME/.zshrc
 	echo 'export SSH_AUTH_SOCK=$$(find /tmp -type s -name agent.\* 2>/dev/null | head -n 1)' >> $$HOME/.zshrc
-	echo 'export ANDROID_HOME=/opt/android-sdk' >> $$HOME/.zshrc
-	echo 'export PATH=$$ANDROID_HOME/emulator:$$ANDROID_HOME/tools:$$ANDROID_HOME/tools/bin:$$ANDROID_HOME/platform-tools:$$PATH' >> $$HOME/.zshrc
 	grep -qxF 'if ! ssh-add -l &>/dev/null; then' $$HOME/.zshrc || echo 'if ! ssh-add -l &>/dev/null; then \
    ssh-add ~/.ssh/id_ed25519 ~/.ssh/id_transcarent 2>/dev/null; \
 	fi' >> $$HOME/.zshrc
@@ -112,7 +110,7 @@ install-yay:
 
 install-yay-packages:
 	@echo "Installing yay packages..."
-	yay -S --noconfirm mockery downgrade android-sdk android-sdk-platform-tools android-sdk-emulator android-emulator android-udev
+	yay -S --noconfirm mockery downgrade
 
 install-tailscale:
 	@echo "Installing Tailscale..."
