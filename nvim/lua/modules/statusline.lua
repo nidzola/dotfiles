@@ -64,6 +64,29 @@ M.macro_recording = function()
   return ""
 end
 
+M.is_cherry_pick_week = function()
+  local os_date = os.date("*t")
+  local today = os.time({ year = os_date.year, month = os_date.month, day = os_date.day })
+
+  -- define the last release branch cut (Friday)
+  local last_cut = os.time({ year = 2025, month = 5, day = 9 })
+
+  -- Loop through 2-week intervals from last cut
+  while last_cut <= today do
+    local cherry_pick_start = last_cut
+    local cherry_pick_end = cherry_pick_start + 5 * 24 * 60 * 60 -- Friday to Wednesday (5 days)
+
+    if today >= cherry_pick_start and today <= cherry_pick_end then
+      return " Cherry pick week 🍒 "
+    end
+
+    -- Move to next 2-week sprint
+    last_cut = last_cut + 14 * 24 * 60 * 60
+  end
+
+  return ""
+end
+
 M.get_statusline = function()
   local parts = {
     "%{v:lua.status.current_mode()}",
@@ -72,8 +95,9 @@ M.get_statusline = function()
     "%#StatusLineInfo#%{v:lua.status.dap_status()}",
     "%#StatusLineInfo#%{v:lua.status.macro_recording()}",
     "%#StatusLineInfo#%{v:lua.status.selected_char_count()}",
+    "%#StatusLineInfo#%{v:lua.status.is_cherry_pick_week()}",
     "%#StatusLineInfo#%{v:lua.status.copilot()}",
-    "%#StatuslineNormal#%l/%L:%c", -- line number, total lines, column number
+    "%#StatuslineNormal#%4l/%-4L:%-3c", -- line number (min 4 width), total lines (min 4 width), column number (min 3 width)
   }
   return table.concat(parts)
 end

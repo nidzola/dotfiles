@@ -15,6 +15,12 @@ return {
     formatters_by_ft = {
       go = { "goimports", "gofmt" },
       sql = { "sqlfluff" },
+      lua = { "stylua" },
+      graphql = { "prettierd" },
+      javascript = { "prettierd" },
+      typescript = { "prettierd" },
+      typescriptreact = { "prettierd" },
+      javascriptreact = { "prettierd" },
     },
   },
 }
