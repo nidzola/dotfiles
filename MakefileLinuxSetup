@@ -20,15 +20,16 @@ update-system:
 
 install-packages:
 	@echo "Installing essential packages..."
-	sudo pacman -S --noconfirm --needed git curl wget zsh neovim tmux base-devel htop ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn ncdu luarocks
+	sudo pacman -S --noconfirm --needed git curl wget zsh neovim tmux base-devel htop ripgrep rsync unzip yazi ffmpeg 7zip jq poppler fd fzf zoxide imagemagick nvm eza clang llvm lazygit terraform btop networkmanager nmap ufw yarn ncdu luarocks at ly
 
 enable-services:
 	@echo "Enabling services..."
 	sudo systemctl enable --now bluetooth
 	sudo systemctl enable --now sshd
 	sudo systemctl enable --now NetworkManager
-	# disable sleep and hibernate
-	sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+	sudo systemctl enable --now ly.service
+	# disable sleep and hibernate - not needed anymore not using gdm, using ly
+	#	sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
 setup-git:
 	@echo "Setting up Git..."
