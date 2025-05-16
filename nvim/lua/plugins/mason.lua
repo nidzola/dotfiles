@@ -1,5 +1,5 @@
 return {
-  "williamboman/mason.nvim",
+  "mason-org/mason.nvim",
   opts = {
     ensure_installed = {
       "autopep8",
@@ -34,7 +34,6 @@ return {
       "prettier",
       "pyright",
       "ruff",
-      "ruff-lsp",
       "shellcheck",
       "shfmt",
       "sqlfluff",
