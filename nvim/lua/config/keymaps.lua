@@ -36,7 +36,7 @@ end, { noremap = true, desc = "Copy relative path to clipboard" })
 
 -- diagnostic remap
 map("n", "ge", function()
-  vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+  vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next Diagnostic" })
 
 -- Show dependency versions

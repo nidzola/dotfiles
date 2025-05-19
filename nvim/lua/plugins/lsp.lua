@@ -1,6 +1,12 @@
 return {
   "neovim/nvim-lspconfig",
   opts = {
+    diagnostics = {
+      underline = true,
+      virtual_text = false,
+      signs = true,
+      update_in_insert = false,
+    },
     -- kill inlay hints
     inlay_hints = { enabled = false },
     servers = {

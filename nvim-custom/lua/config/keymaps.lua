@@ -32,7 +32,7 @@ end, { noremap = true, desc = "Copy relative path to clipboard" })
 
 -- diagnostic remap
 map("n", "ge", function()
-	vim.diagnostic.goto_next()
+	vim.diagnostic.jump({ count = 1 })
 end, { desc = "Next Diagnostic" })
 
 map("n", "ca", function()
@@ -59,6 +59,7 @@ map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 -- hlsearch
 map("n", "<Esc>", function()
 	if vim.v.hlsearch == 1 then
