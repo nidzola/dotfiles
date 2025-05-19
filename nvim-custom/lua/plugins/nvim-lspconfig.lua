@@ -1,5 +1,13 @@
 return {
 	"neovim/nvim-lspconfig",
+	opts = {
+		diagnostics = {
+			underline = true,
+			virtual_text = false,
+			signs = true,
+			update_in_insert = false,
+		},
+	},
 	config = function()
 		vim.lsp.config("vtsls", {
 			settings = {

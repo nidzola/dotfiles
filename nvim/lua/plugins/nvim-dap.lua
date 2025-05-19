@@ -4,18 +4,6 @@ return {
     local dap = require("dap")
 
     dap.configurations.go = dap.configurations.go or {}
-    table.insert(dap.configurations.go, {
-      type = "go",
-      name = "Debug with SOCKS5 Proxy",
-      request = "launch",
-      program = "${file}",
-      env = {
-        http_proxy = "socks5h://localhost:1080",
-        https_proxy = "socks5h://localhost:1080",
-        GOOGLE_APPLICATION_CREDENTIALS = "/home/nidzola/.gcp/go-api-local-dev.json",
-      },
-      console = "integratedTerminal",
-    })
     ----------------------------------------------------------------------------
     -- LISTEN FOR 'event_output' AND STRIP/REFORMAT LOG LINES
     ----------------------------------------------------------------------------

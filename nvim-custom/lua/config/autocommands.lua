@@ -42,11 +42,11 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 -- -- Show errors and warnings in a floating window
-vim.api.nvim_create_autocmd("CursorHold", {
-	callback = function()
-		local diagnostics = vim.diagnostic.get()
-		if #diagnostics > 0 then
-			vim.diagnostic.open_float(nil, { header = false, focusable = true, source = "if_many", border = "rounded" })
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd("CursorHold", {
+-- 	callback = function()
+-- 		local diagnostics = vim.diagnostic.get()
+-- 		if #diagnostics > 0 then
+-- 			vim.diagnostic.open_float(nil, { header = false, focusable = true, source = "if_many", border = "rounded" })
+-- 		end
+-- 	end,
+-- })

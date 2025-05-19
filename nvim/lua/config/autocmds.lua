@@ -38,30 +38,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client == nil then
-      return
-    end
-
-    -- Disable word highlighting under the cursor
-    if client.server_capabilities.documentHighlightProvider then
-      client.server_capabilities.documentHighlightProvider = false
-    end
-    if client.supports_method("textDocument/publishDiagnostics") then
-      -- In summary, this code configures Neovim to show diagnostic messages from the language server with underlines and signs, but not inline text or popups, and not while you're typing.
-      client.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_lines = false,
-        virtual_text = false,
-        underline = true,
-        signs = true,
-        update_in_insert = false,
-      })
-    end
-  end,
-})
-
 vim.api.nvim_create_autocmd("User", {
   pattern = "MiniFilesActionRename",
   callback = function(event)
@@ -69,8 +45,8 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
-vim.api.nvim_create_autocmd("CursorHold", {
-  callback = function()
-    vim.diagnostic.open_float(nil, { header = false, focusable = true, source = "if_many", border = "rounded" })
-  end,
-})
+-- vim.api.nvim_create_autocmd("CursorHold", {
+--   callback = function()
+--     vim.diagnostic.open_float(nil, { header = false, focusable = true, source = "if_many", border = "rounded" })
+--   end,
+-- })
