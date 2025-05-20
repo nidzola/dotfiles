@@ -1,9 +1,4 @@
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>gm",
-  "<Cmd>!go generate %<CR>",
-  { noremap = true, silent = true, desc = "Go generate" }
-)
+vim.api.nvim_set_keymap("n", "<leader>gm", "<Cmd>!mockery<CR>", { noremap = true, silent = true, desc = "Go generate" })
 
 vim.api.nvim_set_keymap(
   "n",
