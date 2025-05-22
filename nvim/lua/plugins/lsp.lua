@@ -18,13 +18,40 @@ return {
     setup = {
       vtsls = function(_, opts)
         -- opts.cmd = { "ssh", "nidzola@100.103.29.125", "node_modules/.bin/vtsls", "--stdio" }
+        -- disable formattinga to not conflict with prettier
+        opts.on_attach = function(client, bufnr)
+          -- Prevent formatting
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+
+          -- Force apply settings on attach
+          client.config.settings = opts.settings
+          client.notify("workspace/didChangeConfiguration", { settings = opts.settings })
+
+          -- Optional: force local indent
+          vim.bo[bufnr].shiftwidth = 2
+          vim.bo[bufnr].tabstop = 2
+          vim.bo[bufnr].softtabstop = 2
+          vim.bo[bufnr].expandtab = true
+        end
+
         opts.settings = {
           javascript = {
+            format = {
+              indentSize = 2,
+              convertTabsToSpaces = true,
+              tabSize = 2,
+            },
             preferences = {
               importModuleSpecifier = "non-relative",
             },
           },
           typescript = {
+            format = {
+              indentSize = 2,
+              convertTabsToSpaces = true,
+              tabSize = 2,
+            },
             preferences = {
               importModuleSpecifier = "non-relative",
             },
