@@ -29,6 +29,8 @@
 !lazygit/**/*
 !aerospace/
 !aerospace/**/*
+!aicommit2/
+!aicommit2/**/*
 /**/.DS_Store
 
 !linux/

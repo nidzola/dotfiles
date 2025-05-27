@@ -1,11 +1,9 @@
 gui:
   showFileTree: false
-
 os:
   copyToClipboardCmd: "echo {{text}} | ssh -T nikola@macbook pbcopy"
-
 customCommands:
-  - key: "C"
+  - key: "<c-a>"
     command: 'git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}"'
     description: "commit with commitizen"
     context: "files"
@@ -59,3 +57,8 @@ customCommands:
   - key: "O"
     command: ~/projects/bin/osx_open_pr
     context: localBranches
+  - key: C
+    description: Pick AI commit (no verify)
+    command: aicommit2 --no-verify --all
+    context: files
+    output: terminal
