@@ -127,7 +127,7 @@ install-go:
 	sudo pacman -S --noconfirm go
 	@echo "Installing Go tools..."
 	go install github.com/vektra/mockery@latest
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
+	go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.1.6
 	go install github.com/google/wire/cmd/wire@latest
 	go install gotest.tools/gotestsum@latest
 
@@ -166,8 +166,8 @@ install-protobuf:
 
 install-gcloud:
 	@echo "Installing Google Cloud SDK..."
-	sudo pacman -S --noconfirm python python-pip
-	yay -S --noconfirm google-cloud-sdk
+	sudo pacman -S --noconfirm --needed python python-pip
+	yay -S --noconfirm --needded google-cloud-sdk 1password-cli
 
 install-rust:
 	@echo "Installing Rust..."
