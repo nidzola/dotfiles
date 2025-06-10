@@ -39,17 +39,7 @@ map("n", "ge", function()
   vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = "Next Diagnostic" })
 
--- Show dependency versions
-map(
-  "n",
-  "<leader>ps",
-  require("package-info").show,
-  { silent = true, noremap = true, desc = "Show dependency versions" }
-)
--- Hide dependency versions:
-map(
-  "n",
-  "<leader>ph",
-  require("package-info").hide,
-  { silent = true, noremap = true, desc = "Hide dependency versions" }
-)
+map("n", "<C-g>d", function()
+  vim.cmd("vsplit")
+  vim.lsp.buf.definition()
+end, { silent = true, noremap = true, desc = "Open definition in split" })

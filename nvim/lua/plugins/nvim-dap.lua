@@ -4,6 +4,24 @@ return {
     local dap = require("dap")
 
     dap.configurations.go = dap.configurations.go or {}
+    table.insert(dap.configurations.go, {
+      type = "go",
+      name = "Debug Go with proxychains",
+      request = "launch",
+      showLog = true,
+      program = "${file}",
+      -- This part wraps dlv with proxychains
+      dlvToolPath = "proxychains",
+      args = {
+        "dlv",
+        "exec",
+        "${file}",
+        "--headless",
+        "--listen=127.0.0.1:38697",
+        "--api-version=2",
+        "--log",
+      },
+    })
     ----------------------------------------------------------------------------
     -- LISTEN FOR 'event_output' AND STRIP/REFORMAT LOG LINES
     ----------------------------------------------------------------------------
