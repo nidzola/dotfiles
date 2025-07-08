@@ -69,3 +69,11 @@ vim.diagnostic.config({
     header = false,
   },
 })
+
+vim.ui.open = function(uri)
+  if vim.env.SSH_CONNECTION or vim.env.SSH_CLIENT or vim.env.SSH_TTY then
+    os.execute('ssh -t nikola@macbook "open \\"' .. uri .. '\\""')
+    return
+  end
+  os.execute(uri)
+end
