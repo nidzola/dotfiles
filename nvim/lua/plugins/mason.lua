@@ -14,6 +14,7 @@ return {
       "docker-compose-language-service",
       "dockerfile-language-server",
       "eslint-lsp",
+      "prisma-language-server",
       "gofumpt",
       "goimports",
       "goimports-reviser",

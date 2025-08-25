@@ -8,6 +8,7 @@ return {
       "diff",
       "dockerfile",
       "dot",
+      "prisma",
       "git_config",
       "gitignore",
       "go",
