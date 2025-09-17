@@ -48,7 +48,7 @@ M.selected_char_count = function()
 end
 
 M.copilot = function()
-  local clients = package.loaded["copilot"] and LazyVim.lsp.get_clients({ name = "copilot", bufnr = 0 }) or {}
+  local clients = vim.lsp.get_clients({ bufnr = 0, name = "copilot" })
 
   if #clients > 0 then
     return "   "
