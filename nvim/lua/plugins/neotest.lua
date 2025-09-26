@@ -1,7 +1,7 @@
 return {
   "nvim-neotest/neotest",
   dependencies = {
-    "fredrikaverpil/neotest-golang",
+    { "fredrikaverpil/neotest-golang" },
     "nvim-neotest/neotest-plenary",
     "nvim-neotest/neotest-jest",
     "antoinemadec/FixCursorHold.nvim",
@@ -22,12 +22,17 @@ return {
         require("neotest-plenary"),
         require("neotest-golang")({
           -- go install gotest.tools/gotestsum@latest
-          runner = "gotestsum",
+          runner = "go",
           go_test_args = {
             "-v",
-            "-race",
             "-count=1",
             "-tags=test",
+          },
+          gotestsum_args = {
+            "--format",
+            "standard-verbose",
+            "--jsonfile",
+            "results.json",
           },
         }),
         require("neotest-jest")({
