@@ -35,3 +35,4 @@
 
 !linux/
 !linux/**/*
+!pkglist.txt
