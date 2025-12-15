@@ -61,6 +61,7 @@ return {
             deepCompletion = true,
             staticcheck = true,
             buildFlags = { "-tags=test,wireinject,tools,integration" },
+            memoryMode = "DegradeClosed", -- new
           },
         }
       end,
