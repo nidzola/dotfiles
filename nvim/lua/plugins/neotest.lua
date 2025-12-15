@@ -22,6 +22,7 @@ return {
         require("neotest-plenary"),
         require("neotest-golang")({
           -- go install gotest.tools/gotestsum@latest
+          warn_test_name_dupes = false,
           runner = "go",
           go_test_args = {
             "-v",

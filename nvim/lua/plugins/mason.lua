@@ -31,7 +31,6 @@ return {
       "marksman",
       "misspell",
       "neocmakelsp",
-      "node-debug2-adapter",
       "eslint_d",
       "prettierd",
       "pyright",
@@ -49,7 +48,7 @@ return {
       "vim-language-server",
       "vtsls",
       "yaml-language-server",
-      "postgrestools",
+      "postgres-language-server",
     },
   },
 }

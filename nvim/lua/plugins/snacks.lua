@@ -36,12 +36,12 @@ return {
       zen = { enabled = false },
       ---@class snacks.picker.Config
       picker = {
+        enabled = true,
         sources = {
           files = {
             hidden = true,
           },
         },
-        enabled = true,
         layout = {
           layout = {
             backdrop = false,
